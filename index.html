@@ -17,325 +17,92 @@
     --muted: #7a96b8;
     --radius: 14px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
   }
 
   /* ===== TOP ===== */
-  #top-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px 16px 40px;
-    min-height: 100vh;
-  }
+  #top-screen { display: flex; flex-direction: column; align-items: center; padding: 24px 16px 40px; min-height: 100vh; }
+  .app-header { text-align: center; margin-bottom: 28px; }
+  .app-header .school-label { font-size: 11px; letter-spacing: .12em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+  .app-header h1 { font-size: 22px; font-weight: 800; line-height: 1.3; background: linear-gradient(135deg, var(--accent), #7dd3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .app-header .sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-  .app-header {
-    text-align: center;
-    margin-bottom: 28px;
-  }
-
-  .app-header .school-label {
-    font-size: 11px;
-    letter-spacing: .12em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .app-header h1 {
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1.3;
-    background: linear-gradient(135deg, var(--accent), #7dd3fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .app-header .sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .stage-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    width: 100%;
-    max-width: 480px;
-  }
-
-  .stage-card {
-    background: var(--surface);
-    border: 1.5px solid var(--surface2);
-    border-radius: var(--radius);
-    padding: 16px 14px;
-    cursor: pointer;
-    transition: transform .15s, border-color .15s;
-    position: relative;
-    overflow: hidden;
-  }
-
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 480px; }
+  .stage-card { background: var(--surface); border: 1.5px solid var(--surface2); border-radius: var(--radius); padding: 16px 14px; cursor: pointer; transition: transform .15s, border-color .15s; position: relative; overflow: hidden; }
   .stage-card:active { transform: scale(.97); }
   .stage-card:hover { border-color: var(--accent); }
-
   .stage-card.cleared { border-color: var(--correct); }
-  .stage-card.cleared::after {
-    content: '✓ クリア';
-    position: absolute;
-    top: 8px; right: 8px;
-    font-size: 10px;
-    color: var(--correct);
-    font-weight: 700;
-  }
-
-  .stage-num {
-    font-size: 10px;
-    color: var(--muted);
-    margin-bottom: 4px;
-    letter-spacing: .08em;
-  }
-
-  .stage-name {
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-
-  .stage-icon {
-    font-size: 22px;
-    margin-bottom: 6px;
-  }
-
-  .stage-count {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-
+  .stage-card.cleared::after { content: '✓ クリア'; position: absolute; top: 8px; right: 8px; font-size: 10px; color: var(--correct); font-weight: 700; }
+  .stage-num { font-size: 10px; color: var(--muted); margin-bottom: 4px; letter-spacing: .08em; }
+  .stage-name { font-size: 15px; font-weight: 700; line-height: 1.3; }
+  .stage-icon { font-size: 22px; margin-bottom: 6px; }
+  .stage-count { font-size: 11px; color: var(--muted); margin-top: 6px; }
   .stage-card.priority .stage-name { color: var(--accent2); }
   .stage-card.priority { border-color: #7c3a1a; }
 
   /* ===== QUIZ ===== */
-  #quiz-screen {
-    display: none;
-    flex-direction: column;
-    min-height: 100vh;
-    padding: 0;
-  }
+  #quiz-screen { display: none; flex-direction: column; min-height: 100vh; }
+  .quiz-header { background: var(--surface); padding: 12px 16px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+  .back-btn { background: none; border: none; color: var(--accent); font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1; }
+  .quiz-title-bar { flex: 1; }
+  .quiz-title-bar .stage-label { font-size: 11px; color: var(--muted); }
+  .quiz-title-bar .stage-title { font-size: 15px; font-weight: 700; }
+  .score-badge { background: var(--surface2); border-radius: 20px; padding: 4px 12px; font-size: 14px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+  .progress-bar-wrap { height: 4px; background: var(--surface2); }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #7dd3fc); transition: width .3s; }
 
-  .quiz-header {
-    background: var(--surface);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
+  /* streak */
+  .streak-bar { padding: 6px 16px; min-height: 32px; display: flex; align-items: center; }
+  .streak-badge { background: #7c2d00; border-radius: 20px; padding: 3px 12px; font-size: 13px; font-weight: 700; color: #fed7aa; display: inline-block; animation: popIn .25s ease; }
+  @keyframes popIn { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-  .back-btn {
-    background: none;
-    border: none;
-    color: var(--accent);
-    font-size: 22px;
-    cursor: pointer;
-    padding: 0 4px;
-    line-height: 1;
-  }
-
-  .quiz-title-bar {
-    flex: 1;
-  }
-
-  .quiz-title-bar .stage-label {
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  .quiz-title-bar .stage-title {
-    font-size: 15px;
-    font-weight: 700;
-  }
-
-  .score-badge {
-    background: var(--surface2);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--accent);
-    white-space: nowrap;
-  }
-
-  .progress-bar-wrap {
-    height: 4px;
-    background: var(--surface2);
-  }
-
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), #7dd3fc);
-    transition: width .3s;
-  }
-
-  .quiz-body {
-    flex: 1;
-    padding: 20px 16px;
-    max-width: 560px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .q-counter {
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
-
-  .q-text {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.6;
-    margin-bottom: 24px;
-    min-height: 64px;
-  }
-
-  .choices {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .choice-btn {
-    background: var(--surface);
-    border: 2px solid var(--surface2);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    cursor: pointer;
-    text-align: left;
-    transition: border-color .12s, background .12s;
-    line-height: 1.4;
-  }
-
+  .quiz-body { flex: 1; padding: 16px 16px 40px; max-width: 560px; margin: 0 auto; width: 100%; }
+  .q-counter { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .q-text { font-size: 18px; font-weight: 700; line-height: 1.6; margin-bottom: 24px; min-height: 60px; }
+  .choices { display: flex; flex-direction: column; gap: 12px; }
+  .choice-btn { background: var(--surface); border: 2px solid var(--surface2); border-radius: var(--radius); padding: 16px 18px; font-size: 16px; font-weight: 600; color: var(--text); cursor: pointer; text-align: left; transition: border-color .12s, background .12s; line-height: 1.4; }
   .choice-btn:active { opacity: .85; }
   .choice-btn:disabled { cursor: default; }
   .choice-btn.correct { border-color: var(--correct); background: #14301f; color: var(--correct); }
   .choice-btn.wrong   { border-color: var(--wrong); background: #2d1010; color: var(--wrong); }
 
-  .feedback-box {
-    margin-top: 20px;
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 16px;
-    border-left: 4px solid var(--accent);
-    display: none;
-  }
-
+  .feedback-box { margin-top: 20px; background: var(--surface); border-radius: var(--radius); padding: 16px; border-left: 4px solid var(--accent); display: none; }
   .feedback-box.show { display: block; }
-  .feedback-result {
-    font-size: 18px;
-    font-weight: 800;
-    margin-bottom: 8px;
-  }
+  .feedback-result { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
   .feedback-result.ok { color: var(--correct); }
   .feedback-result.ng { color: var(--wrong); }
-  .feedback-explain {
-    font-size: 14px;
-    line-height: 1.7;
-    color: #c8ddf0;
-  }
+  .correct-answer-line { font-size: 14px; color: #fde68a; font-weight: 700; margin-bottom: 8px; }
+  .feedback-label { font-size: 11px; color: var(--muted); letter-spacing: .08em; margin-top: 10px; margin-bottom: 2px; }
+  .feedback-explain { font-size: 14px; line-height: 1.7; color: #c8ddf0; }
+  .feedback-comment { font-size: 13px; line-height: 1.6; color: #fde68a; margin-top: 4px; font-style: italic; }
 
-  .next-btn {
-    display: none;
-    width: 100%;
-    margin-top: 16px;
-    background: var(--accent);
-    border: none;
-    border-radius: var(--radius);
-    padding: 16px;
-    font-size: 17px;
-    font-weight: 800;
-    color: #fff;
-    cursor: pointer;
-    transition: opacity .15s;
-  }
+  .next-btn { display: none; width: 100%; margin-top: 16px; background: var(--accent); border: none; border-radius: var(--radius); padding: 16px; font-size: 17px; font-weight: 800; color: #fff; cursor: pointer; transition: opacity .15s; }
   .next-btn:active { opacity: .8; }
   .next-btn.show { display: block; }
 
   /* ===== RESULT ===== */
-  #result-screen {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 32px 20px;
-  }
-
-  .result-emoji { font-size: 64px; margin-bottom: 12px; }
-  .result-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
-  .result-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
-
-  .result-score-ring {
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    border: 8px solid var(--surface2);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    margin-bottom: 28px;
-    position: relative;
-  }
-
-  .result-score-ring .score-num {
-    font-size: 48px; font-weight: 900;
-    line-height: 1;
-  }
-  .result-score-ring .score-denom {
-    font-size: 14px; color: var(--muted);
-  }
-
-  .result-msg {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    font-size: 15px;
-    line-height: 1.7;
-    text-align: center;
-    max-width: 400px;
-    margin-bottom: 24px;
-  }
-
+  #result-screen { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 32px 20px; }
+  .result-emoji { font-size: 72px; margin-bottom: 12px; }
+  .result-title { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .result-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; text-align: center; }
+  .result-score-big { font-size: 56px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+  .result-score-label { font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+  .result-pct { font-size: 22px; font-weight: 800; margin-bottom: 20px; }
+  .result-msg { background: var(--surface); border-radius: var(--radius); padding: 16px 20px; font-size: 15px; line-height: 1.7; text-align: center; max-width: 400px; width: 100%; margin-bottom: 24px; }
   .result-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-
-  .r-btn {
-    border-radius: var(--radius);
-    padding: 14px 24px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: opacity .15s;
-  }
+  .r-btn { border-radius: var(--radius); padding: 14px 24px; font-size: 15px; font-weight: 700; cursor: pointer; border: none; transition: opacity .15s; }
   .r-btn:active { opacity: .8; }
   .r-btn.primary { background: var(--accent); color: #fff; }
   .r-btn.secondary { background: var(--surface); color: var(--text); border: 2px solid var(--surface2); }
+  .r-btn.review { background: var(--accent2); color: #fff; }
 
-  .hidden { display: none !important; }
+  /* ===== REVIEW MODE ===== */
+  .review-badge { background: var(--accent2); border-radius: 20px; padding: 3px 14px; font-size: 12px; font-weight: 700; color: #fff; display: inline-block; margin-bottom: 12px; }
 </style>
 </head>
 <body>
@@ -345,9 +112,8 @@
   <div class="app-header">
     <div class="school-label">向丘中学校 2年 中間テスト対策</div>
     <h1>理科 クイズアプリ</h1>
-    <div class="sub">全9ステージ・各20問 ／ 80%以上でクリア</div>
+    <div class="sub">全9ステージ ／ 80%以上でクリア</div>
   </div>
-
   <div class="stage-grid" id="stage-grid"></div>
 </div>
 
@@ -364,13 +130,18 @@
   <div class="progress-bar-wrap">
     <div class="progress-bar-fill" id="prog-fill" style="width:0%"></div>
   </div>
+  <div class="streak-bar" id="streak-bar"></div>
   <div class="quiz-body">
     <div class="q-counter" id="q-counter"></div>
     <div class="q-text" id="q-text"></div>
     <div class="choices" id="choices"></div>
     <div class="feedback-box" id="feedback-box">
       <div class="feedback-result" id="fb-result"></div>
+      <div class="correct-answer-line" id="fb-correct-line"></div>
+      <div class="feedback-label">解説</div>
       <div class="feedback-explain" id="fb-explain"></div>
+      <div class="feedback-label">先生コメント</div>
+      <div class="feedback-comment" id="fb-comment"></div>
     </div>
     <button class="next-btn" id="next-btn" onclick="nextQuestion()">次の問題 →</button>
   </div>
@@ -381,12 +152,12 @@
   <div class="result-emoji" id="res-emoji"></div>
   <div class="result-title" id="res-title"></div>
   <div class="result-sub" id="res-sub"></div>
-  <div class="result-score-ring">
-    <div class="score-num" id="res-score-num"></div>
-    <div class="score-denom" id="res-score-denom"></div>
-  </div>
+  <div class="result-score-big" id="res-score-big"></div>
+  <div class="result-score-label" id="res-score-label"></div>
+  <div class="result-pct" id="res-pct"></div>
   <div class="result-msg" id="res-msg"></div>
   <div class="result-btns">
+    <button class="r-btn review" id="review-btn" onclick="startReview()" style="display:none">📝 間違えた問題を復習</button>
     <button class="r-btn primary" onclick="retryStage()">もう一度</button>
     <button class="r-btn secondary" onclick="goTop()">ステージ選択</button>
   </div>
@@ -394,253 +165,256 @@
 
 <script>
 // =============================================
-// 問題データベース（全9ステージ）
+// コメント定数
 // =============================================
-const STAGES = [
-  {
-    id: 1,
-    name: "地層編",
-    icon: "🪨",
-    priority: false,
-    questions: [
-      {q:"岩石が長い年月をかけて砕かれ、もろくなる現象を何という？",choices:["風化","侵食","堆積","運搬"],ans:0,ex:"風化とは、気温の変化や水などによって岩石が表面からもろくなる現象です。侵食・運搬・堆積とセットで覚えましょう。"},
-      {q:"川の流れや風が岩石や地面を削る働きを何という？",choices:["堆積","運搬","侵食","風化"],ans:2,ex:"侵食とは、水や風が地面や岩石を削り取る働きです。川の上流で特に強く起こります。"},
-      {q:"川が土砂などを流し運ぶ働きを何という？",choices:["堆積","運搬","侵食","風化"],ans:1,ex:"運搬とは、侵食で削られた土砂などを流れが運ぶ働きです。川の中流で主に起こります。"},
-      {q:"土砂などが水底に積もる働きを何という？",choices:["侵食","運搬","風化","堆積"],ans:3,ex:"堆積とは、運ばれてきた土砂が水底に積み重なることです。川の下流や海底で起こります。"},
-      {q:"粒の直径が2mm以上のものを何という？",choices:["泥","砂","れき","凝灰岩"],ans:2,ex:"れき（礫）は直径2mm以上の粒です。砂は0.06～2mm、泥は0.06mm以下です。"},
-      {q:"粒の直径が0.06mm以下のものを何という？",choices:["砂","れき","泥","土"],ans:2,ex:"泥は粒径0.06mm以下の細かい粒です。水に流されやすく、沖合の深い海底に積もります。"},
-      {q:"地層が水平方向に連続しているとき、同じ高さの層は同時期に堆積したと考える法則を何という？",choices:["地層の法則","地層同定の原理","示準化石の法則","地層累重の法則"],ans:3,ex:"地層累重の法則とは、下の地層ほど古く、上の地層ほど新しいという法則です。"},
-      {q:"離れた地点の地層を比べるために用いる柱状の図を何という？",choices:["地質図","断面図","柱状図","地形図"],ans:2,ex:"柱状図とは、ボーリング調査で得た地層の重なりを棒状に表した図です。離れた地点の地層を対比するのに使います。"},
-      {q:"れきが固まってできた岩石を何という？",choices:["砂岩","泥岩","凝灰岩","れき岩"],ans:3,ex:"れき岩はれき（直径2mm以上）が固まった岩石です。砂→砂岩、泥→泥岩と覚えましょう。"},
-      {q:"砂が固まってできた岩石を何という？",choices:["泥岩","れき岩","砂岩","花こう岩"],ans:2,ex:"砂岩は砂（0.06～2mm）が固まった岩石です。表面がざらざらしています。"},
-      {q:"泥が固まってできた岩石を何という？",choices:["砂岩","れき岩","泥岩","安山岩"],ans:2,ex:"泥岩は泥（0.06mm以下）が固まった岩石です。表面がなめらかです。"},
-      {q:"火山灰が固まってできた岩石を何という？",choices:["砂岩","泥岩","れき岩","凝灰岩"],ans:3,ex:"凝灰岩は火山灰が堆積して固まった岩石です。鍵層として地層の対比に使われます。"},
-      {q:"離れた場所の地層を比較するための目印となる層を何という？",choices:["示準層","基準層","鍵層","対比層"],ans:2,ex:"鍵層とは、広範囲に同時期に堆積した目立つ層のことです。凝灰岩の層がよく使われます。"},
-      {q:"粒が大きいほど、海の浅い・深いどちらに積もる？",choices:["深い海","沖合","浅い海","川底"],ans:2,ex:"粒が大きいほど重くて早く沈むため、浅い海（海岸近く）に積もります。沖に行くほど細かい泥が積もります。"},
-      {q:"地層が海側に沈み込むことを何という？",choices:["隆起","海進","海退","沈降"],ans:3,ex:"沈降とは、地層が下がること（沈む）です。海岸線が内陸に向かって広がる海進が起こります。"},
-      {q:"地層が陸側に持ち上がることを何という？",choices:["沈降","海進","海退","侵食"],ans:0,ex:"隆起とは、地層が上に持ち上がることです。海岸線が後退する海退が起こります。"},
-      {q:"陸地が水没して海が広がる現象を何という？",choices:["海退","隆起","沈降","海進"],ans:3,ex:"海進とは、地盤の沈降などによって海岸線が陸側に移動し、海の範囲が広がることです。"},
-      {q:"海が後退して陸地が広がる現象を何という？",choices:["海進","海退","沈降","堆積"],ans:1,ex:"海退とは、地盤の隆起などによって海岸線が海側に移動し、陸地が広がることです。"},
-      {q:"柱状図で、同じ種類の地層がどの地点にもあれば何がわかる？",choices:["地層の色","同時期に堆積したこと","化石の種類","粒の大きさ"],ans:1,ex:"柱状図の同じ地層（鍵層など）を対比することで、離れた地点でも同じ時代に堆積したことがわかります。"},
-      {q:"川の上流・下流、どちらに大きな粒が多い？",choices:["下流","河口","上流","海底"],ans:2,ex:"上流は流れが速く侵食が強いため、大きなれきが多いです。下流に行くほど小さな砂や泥になります。"}
-    ]
-  },
-  {
-    id: 2,
-    name: "化石編",
-    icon: "🦕",
-    priority: true,
-    questions: [
-      {q:"地層が堆積した年代を知るための化石を何という？",choices:["示相化石","鍵化石","示準化石","地質化石"],ans:2,ex:"示準化石とは、地層の年代（時代）を決めるための化石です。短期間だけ栄えて広い範囲に分布した生物が使われます。"},
-      {q:"地層が堆積した当時の環境を知るための化石を何という？",choices:["示準化石","示相化石","鍵化石","環境化石"],ans:1,ex:"示相化石とは、地層ができた当時の環境（気候・水深など）を知るための化石です。特定の環境にしか生きられなかった生物が使われます。"},
-      {q:"中生代を代表する示準化石は？",choices:["三葉虫","フズリナ","アンモナイト","ビカリア"],ans:2,ex:"アンモナイトは中生代（約2億5千万年前〜約6600万年前）の示準化石です。海に広く生息していました。"},
-      {q:"古生代を代表する示準化石は？（2つあるが1つ選べ）",choices:["アンモナイト","ビカリア","サンゴ","三葉虫"],ans:3,ex:"三葉虫は古生代を代表する示準化石です。フズリナも古生代の示準化石として重要です。"},
-      {q:"フズリナが生きていたのはいつの時代？",choices:["新生代","中生代","古生代","原生代"],ans:2,ex:"フズリナ（紡錘虫）は古生代に生きた海の生物です。石灰岩の中によく見つかります。"},
-      {q:"新生代を代表する示準化石は？",choices:["アンモナイト","三葉虫","フズリナ","ビカリア"],ans:3,ex:"ビカリア（巻き貝の仲間）は新生代の示準化石です。日本でも各地で発見されています。"},
-      {q:"サンゴは示準化石・示相化石のどちら？",choices:["示準化石","どちらでもない","示相化石","鍵化石"],ans:2,ex:"サンゴは示相化石です。現在のサンゴと同様に、暖かく浅い海に生息していたことがわかります。"},
-      {q:"サンゴの化石が見つかった地層は、どんな環境だったとわかる？",choices:["冷たく深い海","暖かく浅い海","淡水の川","砂漠"],ans:1,ex:"サンゴは暖かく浅い海に生息します。サンゴの化石が出た地層は、当時暖かく浅い海だったことがわかります。"},
-      {q:"シジミの化石が見つかった地層は、どんな環境だったとわかる？",choices:["深海","暖かい海","湖や河口（汽水域）","砂漠"],ans:2,ex:"シジミは淡水〜汽水（海水と淡水が混じる）に生息します。シジミの化石は湖や川の河口付近だったことを示します。"},
-      {q:"示準化石として適切な生物の条件は？",choices:["狭い範囲に長期間生きた","広い範囲に短期間生きた","深海のみに生きた","陸上だけに生きた"],ans:1,ex:"示準化石には「広い範囲に分布」し「短期間だけ栄えた」生物が適しています。これで地層の年代を限定できます。"},
-      {q:"アンモナイトは何の仲間？",choices:["魚類","三葉虫の近縁","軟体動物（頭足類）","植物"],ans:2,ex:"アンモナイトはイカやタコに近い軟体動物（頭足類）です。巻き貝のような殻を持ちます。"},
-      {q:"三葉虫が絶滅したのはいつ？",choices:["中生代の末","新生代の初め","古生代の末","現在も生きている"],ans:2,ex:"三葉虫は古生代の末（約2億5千万年前のペルム紀末）に起きた大量絶滅で消えました。"},
-      {q:"古生代はおよそ何年前から何年前までか（近いものを選べ）",choices:["6600万年前まで","2億5千万年前まで","5億4千万年前〜2億5千万年前","1億年前まで"],ans:2,ex:"古生代は約5億4千万年前〜約2億5千万年前です。中生代は2億5千万〜6600万年前、新生代は6600万年前〜現在です。"},
-      {q:"示相化石に向いている生物の条件は？",choices:["広い環境に適応できる","特定の環境にしか生きられない","絶滅している必要がある","大型である"],ans:1,ex:"示相化石には「特定の環境でしか生きられない」生物が適しています。現在も似た環境の生物と比較できると便利です。"},
-      {q:"フズリナはどんな形をしている？",choices:["巻き貝型","紡錘（ぼうすい）型","三葉型","球形"],ans:1,ex:"フズリナは紡錘（ぼうすい）型（麦粒のような形）をした単細胞生物です。石灰質の殻を持ちます。"},
-      {q:"地質年代を古い順に並べると？",choices:["中生代→古生代→新生代","古生代→新生代→中生代","新生代→中生代→古生代","古生代→中生代→新生代"],ans:3,ex:"古い順は「古生代→中生代→新生代」です。古生代（三葉虫・フズリナ）→中生代（アンモナイト）→新生代（ビカリア）と覚えましょう。"},
-      {q:"恐竜が生きていたのは何代？",choices:["古生代","新生代","現代","中生代"],ans:3,ex:"恐竜は中生代（約2億5千万年前〜約6600万年前）に栄えました。同じ中生代の示準化石アンモナイトと一緒に覚えましょう。"},
-      {q:"マンモスの化石は何代の地層から出る？",choices:["古生代","中生代","新生代","先カンブリア時代"],ans:2,ex:"マンモスは新生代に生きた大型哺乳類です。新生代は約6600万年前から現在まで続いています。"},
-      {q:"化石になりやすい部位はどれ？",choices:["筋肉","皮膚","骨・殻・歯","毛"],ans:2,ex:"化石になりやすいのは固い骨・殻・歯などです。柔らかい筋肉や皮膚は腐って消えてしまうことがほとんどです。"},
-      {q:"凝灰岩の層が鍵層として使われる理由は？",choices:["化石が多いから","広い範囲に同時に積もるから","粒が大きいから","水に溶けやすいから"],ans:1,ex:"火山灰は噴火の際に広い範囲に短期間で積もります。そのため凝灰岩の層は同時期の地層として対比（鍵層）に使われます。"}
-    ]
-  },
-  {
-    id: 3,
-    name: "地震編",
-    icon: "🌏",
-    priority: true,
-    questions: [
-      {q:"地震が発生した地下の場所を何という？",choices:["震央","震源","震度","震源域"],ans:1,ex:"震源とは、地下で地震が発生した場所（点）です。震央は震源の真上の地表面の点です。"},
-      {q:"震源の真上の地表面の点を何という？",choices:["震源","震度","震央","活断層"],ans:2,ex:"震央とは、震源を地表に投影した点（震源の真上）です。地図上では星印などで示されます。"},
-      {q:"地震の波のうち、速くて先に到着するのは？",choices:["S波","主要動","L波","P波"],ans:3,ex:"P波（Primary wave）は速い波です。縦波（疎密波）で先に到着し、初期微動を起こします。"},
-      {q:"地震の波のうち、遅くて後から到着するのは？",choices:["P波","初期微動","S波","縦波"],ans:2,ex:"S波（Secondary wave）は遅い波です。横波で後から到着し、大きな揺れ（主要動）を起こします。"},
-      {q:"P波だけが届いている間の小さな揺れを何という？",choices:["主要動","余震","初期微動","P動"],ans:2,ex:"初期微動とは、P波が到着してからS波が到着するまでの小さな揺れです。「初期微動＝P波だけの時間」と覚えましょう。"},
-      {q:"S波が到達してからの大きな揺れを何という？",choices:["初期微動","余震","前震","主要動"],ans:3,ex:"主要動とは、S波の到着とともに始まる大きな揺れです。建物の被害はほとんど主要動で起こります。"},
-      {q:"P波が到着してからS波が到着するまでの時間を何という？",choices:["主要動継続時間","震源距離","初期微動継続時間","地震波時間"],ans:2,ex:"初期微動継続時間は「P波到着からS波到着までの時間」です。震源から遠いほどこの時間が長くなります。"},
-      {q:"初期微動継続時間が長いほど、震源との距離はどうなる？",choices:["近い","変わらない","遠い","深くなる"],ans:2,ex:"震源が遠いほど、P波とS波の到着時間の差（初期微動継続時間）が大きくなります。これで震源距離を推定できます。"},
-      {q:"地震の揺れの大きさを場所ごとに表す尺度を何という？",choices:["マグニチュード","震源距離","震度","加速度"],ans:2,ex:"震度とは、ある地点での揺れの大きさを表す数値です。日本では0〜7（5と6は強弱がある）の10段階です。"},
-      {q:"地震そのもののエネルギーの大きさを表す値を何という？",choices:["震度","最大震度","震源深さ","マグニチュード"],ans:3,ex:"マグニチュード（M）は地震のエネルギーの大きさを表します。1大きくなるとエネルギーは約32倍になります。"},
-      {q:"P波とS波のどちらが先に地震計に記録される？",choices:["同時","S波","P波","どちらでもない"],ans:2,ex:"P波は速いので先に到着します。地震計にはP波による小さな揺れ（初期微動）が先に記録されます。"},
-      {q:"地震計が記録するグラフで、小さな揺れから大きな揺れに変わる点は何の到着を示す？",choices:["P波","津波","S波","余震"],ans:2,ex:"地震計の記録で揺れが急に大きくなる点がS波の到着です。それ以前の小さな揺れはP波による初期微動です。"},
-      {q:"震度は何段階？",choices:["5段階","7段階","10段階","12段階"],ans:2,ex:"日本の震度階級は0〜7の10段階（5弱・5強・6弱・6強を含む）です。"},
-      {q:"マグニチュードが同じでも震度が違う理由は？",choices:["波の種類が違う","震源からの距離や地盤が異なるから","測定機器が違うから","時間帯が違うから"],ans:1,ex:"震度は場所によって異なります。震源に近いほど、または地盤が軟らかいほど震度が大きくなります。"},
-      {q:"海底で地震が起きたとき、特に注意すべき災害は？",choices:["火事","液状化","土砂崩れ","津波"],ans:3,ex:"海底地震では津波が発生することがあります。津波は海岸に近づくほど速度が下がり、波高が高くなります。"},
-      {q:"震源の深さが浅いほど、地表への影響はどうなる？",choices:["小さくなる","変わらない","大きくなる","波が届かない"],ans:2,ex:"震源が浅いほど、地表への揺れが大きくなります。浅い地震ほど被害が大きくなりやすいです。"},
-      {q:"地震計は地面の何を記録する装置？",choices:["温度変化","揺れの振動","気圧変化","磁場変化"],ans:1,ex:"地震計は地面の揺れ（振動）を記録する装置です。P波・S波の到着時刻や振幅を記録します。"},
-      {q:"P波の速さはS波と比べてどうか？",choices:["同じ","遅い","約2倍速い","10倍速い"],ans:2,ex:"P波はS波の約1.7〜2倍の速さで伝わります。だからP波が先に到着し、S波が後から来ます。"},
-      {q:"震源からの距離が2倍になると、初期微動継続時間はどうなる？",choices:["変わらない","半分になる","2倍になる","4倍になる"],ans:2,ex:"初期微動継続時間は震源距離に比例します。距離が2倍になれば、P波とS波の差も2倍になります。"},
-      {q:"緊急地震速報はどちらの波を検知して発信する？",choices:["S波","主要動","P波","表面波"],ans:2,ex:"緊急地震速報はP波（速い波）を感知した瞬間に発信します。遅いS波（主要動）が来る前に警報を伝えます。"}
-    ]
-  },
-  {
-    id: 4,
-    name: "火山・岩石編",
-    icon: "🌋",
-    priority: true,
-    questions: [
-      {q:"地下の岩石が高温で溶けたものを何という？",choices:["溶岩","火山灰","マグマ","火山ガス"],ans:2,ex:"マグマとは、地下で岩石が溶けたものです。地表に出ると溶岩と呼ばれます。"},
-      {q:"マグマが地表に流れ出たものを何という？",choices:["マグマ","火山灰","火山ガス","溶岩"],ans:3,ex:"溶岩とは、マグマが火口から地表に流れ出たものです。冷えて固まると火山岩になります。"},
-      {q:"マグマが急に冷えて固まった岩石を何という？",choices:["深成岩","変成岩","堆積岩","火山岩"],ans:3,ex:"火山岩とは、マグマが地表や地表近くで急激に冷えて固まった岩石です。斑状組織が見られます。"},
-      {q:"マグマが地下でゆっくり冷えて固まった岩石を何という？",choices:["火山岩","堆積岩","変成岩","深成岩"],ans:3,ex:"深成岩とは、マグマが地下深くでゆっくり冷えて固まった岩石です。等粒状組織が見られます。"},
-      {q:"白っぽい火山岩はどれ？",choices:["玄武岩","はんれい岩","安山岩","流紋岩"],ans:3,ex:"流紋岩は白っぽい（明るい色の）火山岩です。深成岩は花こう岩が同じく白っぽいです。"},
-      {q:"黒っぽい火山岩はどれ？",choices:["流紋岩","花こう岩","閃緑岩","玄武岩"],ans:3,ex:"玄武岩は黒っぽい火山岩です。ハワイの火山などでよく見られます。深成岩では「はんれい岩」が黒っぽいです。"},
-      {q:"花こう岩は火山岩と深成岩、どちらか？",choices:["火山岩","変成岩","堆積岩","深成岩"],ans:3,ex:"花こう岩は深成岩です。白っぽく、大きな結晶からなります。御影石として建材にも使われます。"},
-      {q:"安山岩は火山岩と深成岩、どちらか？",choices:["深成岩","堆積岩","変成岩","火山岩"],ans:3,ex:"安山岩は火山岩です。日本の火山に多く見られる岩石で、灰色がかった色をしています。"},
-      {q:"溶岩ドーム型の火山は、マグマの粘り気がどうか？",choices:["粘り気が小さい","粘り気が中程度","粘り気が大きい","水分が多い"],ans:2,ex:"溶岩ドームは粘り気の大きいマグマでできます。爆発的な噴火をすることがあります。昭和新山が例です。"},
-      {q:"盾状火山のマグマの特徴は？",choices:["粘り気が大きい","ガスが多い","粘り気が小さい","温度が低い"],ans:2,ex:"盾状火山は粘り気の小さいマグマでできます。溶岩が遠くまで流れ、なだらかな形になります。ハワイのマウナロアが例です。"},
-      {q:"成層火山はどんな噴火を繰り返してできる？",choices:["穏やかな噴火のみ","爆発的な噴火のみ","穏やかな噴火と爆発的な噴火を交互に","水蒸気爆発のみ"],ans:2,ex:"成層火山は穏やかな噴火（溶岩）と爆発的な噴火を繰り返してできます。富士山が典型例です。"},
-      {q:"鉱物の中で、白色または無色の結晶はどれ？",choices:["黒雲母","輝石","石英","長石"],ans:2,ex:"石英（水晶）は白色または無色透明の鉱物です。ガラスのような光沢があります。"},
-      {q:"鉱物の中で、黒くてうすく割れるのはどれ？",choices:["石英","長石","輝石","黒雲母"],ans:3,ex:"黒雲母は黒色でうすくはがれる（薄片状に割れる）鉱物です。雲母の仲間です。"},
-      {q:"岩石の色が白っぽいほど、含まれる鉱物は？",choices:["有色鉱物が多い","石英・長石が多い","黒雲母が多い","輝石が多い"],ans:1,ex:"白っぽい岩石ほど、白い石英や長石（無色・白色鉱物）が多く含まれます。黒っぽいほど輝石・黒雲母などの有色鉱物が多いです。"},
-      {q:"火山岩に見られる組織で、大きな結晶と小さな粒の混じった組織を何という？",choices:["等粒状組織","変成組織","斑状組織","結晶組織"],ans:2,ex:"斑状組織とは、大きな結晶（斑晶）が小さな粒（石基）の中に散らばった組織です。マグマが急に冷えてできます。"},
-      {q:"深成岩に見られる、粒の大きさがそろった組織を何という？",choices:["斑状組織","変成組織","等粒状組織","マグマ組織"],ans:2,ex:"等粒状組織とは、ほぼ同じ大きさの大きな結晶からなる組織です。ゆっくり冷えた深成岩に見られます。"},
-      {q:"火山岩を白っぽい順に並べると？",choices:["玄武岩→安山岩→流紋岩","安山岩→流紋岩→玄武岩","流紋岩→安山岩→玄武岩","玄武岩→流紋岩→安山岩"],ans:2,ex:"白っぽい順は「流紋岩→安山岩→玄武岩」です。深成岩は「花こう岩→閃緑岩→はんれい岩」の順で対応します。"},
-      {q:"深成岩を白っぽい順に並べると？",choices:["はんれい岩→閃緑岩→花こう岩","花こう岩→閃緑岩→はんれい岩","閃緑岩→花こう岩→はんれい岩","花こう岩→はんれい岩→閃緑岩"],ans:1,ex:"白っぽい順は「花こう岩→閃緑岩→はんれい岩」です。火山岩の「流紋岩→安山岩→玄武岩」と対応して覚えましょう。"},
-      {q:"火山が噴火するとき、水蒸気などの気体として出るものを何という？",choices:["溶岩","火山灰","火山弾","火山ガス"],ans:3,ex:"火山ガスとは、噴火の際に放出される気体（水蒸気・二酸化炭素・二酸化硫黄など）です。"},
-      {q:"溶岩が空中に飛び出て固まったものを何という？",choices:["火山灰","火山ガス","火山弾","軽石"],ans:2,ex:"火山弾とは、マグマが空中に飛び出して冷え固まった塊です。大きさはさまざまで、落下すると危険です。"}
-    ]
-  },
-  {
-    id: 5,
-    name: "プレート編",
-    icon: "🗺️",
-    priority: false,
-    questions: [
-      {q:"地球の表面を覆う岩盤の板を何という？",choices:["地殻","断層","マントル","プレート"],ans:3,ex:"プレートとは、地球の表面を覆う十数枚の固い岩盤の板です。プレートはマントルの対流によって動いています。"},
-      {q:"海底にあるプレートを何という？",choices:["大陸プレート","マントル","海洋プレート","地殻"],ans:2,ex:"海洋プレートとは、海底にある岩盤です。大陸プレートより密度が大きく、ぶつかると沈み込みます。"},
-      {q:"大陸のある厚いプレートを何という？",choices:["海洋プレート","マントル","断層プレート","大陸プレート"],ans:3,ex:"大陸プレートとは、大陸を乗せた岩盤です。海洋プレートより密度が小さく、ぶつかると上に残ります。"},
-      {q:"海洋プレートが大陸プレートの下に沈み込む場所を何という？",choices:["活断層","トラフ","海溝","海嶺"],ans:2,ex:"海溝とは、海洋プレートが沈み込む場所にできる深い溝です。日本海溝などが有名です。"},
-      {q:"日本付近では海洋プレートはどちらに沈み込む？",choices:["大陸プレートの上に乗る","大陸プレートの下に沈み込む","水平に移動する","浮き上がる"],ans:1,ex:"日本付近では、太平洋プレートやフィリピン海プレート（海洋プレート）が大陸プレートの下に沈み込んでいます。"},
-      {q:"プレートの沈み込みで大陸プレートがひずんで跳ね返るときに起こるのは？",choices:["噴火","津波のみ","地震（海溝型）","隆起のみ"],ans:2,ex:"大陸プレートがひずみに耐えられなくなって跳ね返るとき、大きな海溝型地震が起こります。東日本大震災がその例です。"},
-      {q:"海底で大きな地震が起きたとき、海水が持ち上げられて発生するのは？",choices:["火山噴火","地すべり","液状化","津波"],ans:3,ex:"海底地震で海底が急激に動くと、海水が大きく波打ち、津波が発生します。沿岸に近づくほど波高が大きくなります。"},
-      {q:"内陸にある断層が動いて起こる地震を何という？",choices:["海溝型地震","プレート型地震","活断層地震（直下型）","火山性地震"],ans:2,ex:"内陸直下型地震とは、活断層が動いて起こる地震です。浅い場所で起こるため、直上では非常に強い揺れになります。"},
-      {q:"過去に動いた記録があり、今後も動く可能性がある断層を何という？",choices:["正断層","逆断層","活断層","地溝"],ans:2,ex:"活断層とは、数十万年以内に動いた証拠があり、将来も動く可能性のある断層です。"},
-      {q:"日本が地震大国である主な理由は？",choices:["火山が多いから","プレートの境界に位置するから","山が多いから","海に囲まれているから"],ans:1,ex:"日本はユーラシアプレート・北米プレート・太平洋プレート・フィリピン海プレートの4枚のプレートの境界付近にあるため、地震が非常に多いです。"},
-      {q:"トラフとは何か？",choices:["深い海溝","比較的浅い細長い凹地","断層","プレートの境界山脈"],ans:1,ex:"トラフとは、海底の細長い凹地で、海溝より比較的浅いものをいいます。南海トラフが有名です。"},
-      {q:"プレートはどれくらいの速さで動いている？",choices:["年間数cm","年間数m","年間数km","年間数十km"],ans:0,ex:"プレートは年間数cm（人の爪が伸びるくらい）の速さで動いています。長い時間をかけて大陸の形を変えてきました。"},
-      {q:"プレートの動く力の源は何？",choices:["地球の自転","月の引力","マントルの対流","太陽の熱"],ans:2,ex:"プレートはマントルの対流（地球内部の熱による流れ）によって動かされています。"},
-      {q:"日本列島の太平洋側に深い海溝がある理由は？",choices:["火山活動","川の侵食","プレートの沈み込み","隕石の衝突"],ans:2,ex:"太平洋プレートが日本列島の下に沈み込む場所に日本海溝ができています。沈み込みが海溝の原因です。"},
-      {q:"プレートが沈み込む場所で、なぜ火山ができる？",choices:["プレートが摩擦で高温になる","海水が地下に入り融点が下がりマグマができる","圧力が高まるから","日光が当たらないから"],ans:1,ex:"沈み込んだプレートから水が放出されることでマントルの融点が下がり、マグマが発生します。これが火山の原因です。"},
-      {q:"南海トラフはどこにある？",choices:["東北沖","北海道東方沖","紀伊半島〜四国沖","九州西方沖"],ans:2,ex:"南海トラフは紀伊半島〜四国の沖合にあります。フィリピン海プレートが沈み込む場所で、大地震の発生が懸念されています。"},
-      {q:"プレートの境界付近に多いものはどれ？",choices:["平野","砂漠","火山と地震","氷河"],ans:2,ex:"プレートの境界では、マグマの発生や断層の活動が活発なため、火山と地震が集中します。"},
-      {q:"海洋プレートと大陸プレートがぶつかると、どちらが沈み込む？",choices:["大陸プレート","両方沈む","海洋プレート","どちらも沈まない"],ans:2,ex:"海洋プレートは密度が大きいため、大陸プレートの下に沈み込みます。"},
-      {q:"プレートの動きで山脈ができるのはどんな場合？",choices:["プレートが離れるとき","海洋プレートが沈み込むとき","大陸プレート同士がぶつかるとき","プレートが水平にずれるとき"],ans:2,ex:"大陸プレート同士がぶつかると、どちらも沈み込まずに押し合い、ヒマラヤ山脈などの大山脈が形成されます。"},
-      {q:"日本付近で大陸プレートを押す海洋プレートは？（2枚のうち1つ）",choices:["ユーラシアプレート","北米プレート","インドプレート","太平洋プレート"],ans:3,ex:"日本付近では、太平洋プレートとフィリピン海プレートが大陸プレートの下に沈み込んでいます。"}
-    ]
-  },
-  {
-    id: 6,
-    name: "電流基礎編",
-    icon: "⚡",
-    priority: false,
-    questions: [
-      {q:"回路を流れる電気の流れを何という？",choices:["電圧","抵抗","電流","電力"],ans:2,ex:"電流とは、電気の流れのことです。単位はA（アンペア）で、電流計で測定します。"},
-      {q:"電流を流そうとする「圧力」のようなものを何という？",choices:["電流","抵抗","電力","電圧"],ans:3,ex:"電圧とは、電流を押し出す「押す力」（圧力）のようなものです。単位はV（ボルト）で、電圧計で測定します。"},
-      {q:"電流の流れにくさを何という？",choices:["電圧","電力","抵抗","電流"],ans:2,ex:"抵抗とは、電流の流れにくさのことです。単位はΩ（オーム）です。"},
-      {q:"電流計は回路のどのようにつなぐ？",choices:["並列","どちらでもよい","電球と関係なく","直列"],ans:3,ex:"電流計は測定したい部分に直列につなぎます。並列につなぐと大電流が流れて壊れます！"},
-      {q:"電圧計は回路のどのようにつなぐ？",choices:["直列","どちらでもよい","電流計と同じ向き","並列"],ans:3,ex:"電圧計は測定したい部分に並列につなぎます。直列につなぐと電流がほとんど流れなくなります。"},
-      {q:"直列回路では、電流の値はどうなる？",choices:["場所によって異なる","電源に近いほど大きい","回路全体で同じ","抵抗が大きいほど大きい"],ans:2,ex:"直列回路では、回路のどこで測っても電流の大きさは同じです。"},
-      {q:"並列回路では、各部分の電圧はどうなる？",choices:["場所によって異なる","抵抗が大きいほど大きい","電源に近いほど大きい","電源の電圧と同じ"],ans:3,ex:"並列回路では、各枝路の電圧はすべて電源の電圧と等しくなります。"},
-      {q:"電気をよく通す物体を何という？",choices:["絶縁体","不導体","半導体","導体"],ans:3,ex:"導体とは、電気をよく通す物体です。金属（銅・鉄・アルミなど）が導体の代表例です。"},
-      {q:"電気をほとんど通さない物体を何という？",choices:["導体","半導体","不導体（絶縁体）","磁石"],ans:2,ex:"不導体（絶縁体）とは、電気をほとんど通さない物体です。ゴム・プラスチック・ガラスなどが例です。"},
-      {q:"直列回路に電球が2個あるとき、1個切れるとどうなる？",choices:["もう1個は明るくなる","もう1個は暗くなる","もう1個は消える","変わらない"],ans:2,ex:"直列回路では電流の通り道が1本なので、1か所でも切れると回路全体が切れ、すべての電球が消えます。"},
-      {q:"並列回路に電球が2個あるとき、1個切れるとどうなる？",choices:["もう1個も消える","もう1個は暗くなる","もう1個は明るさが変わらない","両方消える"],ans:2,ex:"並列回路では電流の通り道が複数あるので、1個切れても別の通り道を通り、もう1個は点灯し続けます。"},
-      {q:"電流計の+端子はどこにつなぐ？",choices:["電池の－極側","どちらでもよい","電池の＋極側","電球の後ろ"],ans:2,ex:"電流計の＋端子は電源の＋極側につなぎます。逆につなぐと針が反対に振れて壊れることがあります。"},
-      {q:"電流の単位は？",choices:["V（ボルト）","Ω（オーム）","W（ワット）","A（アンペア）"],ans:3,ex:"電流の単位はA（アンペア）です。1000mA＝1Aです。"},
-      {q:"電圧の単位は？",choices:["A（アンペア）","Ω（オーム）","W（ワット）","V（ボルト）"],ans:3,ex:"電圧の単位はV（ボルト）です。乾電池1本は約1.5Vです。"},
-      {q:"抵抗の単位は？",choices:["V（ボルト）","A（アンペア）","Ω（オーム）","W（ワット）"],ans:2,ex:"抵抗の単位はΩ（オーム）です。1ΩはP波とS波の差ではありません。1Vの電圧で1Aの電流が流れる抵抗が1Ωです。"},
-      {q:"直列回路の電圧の合計は？",choices:["電源電圧の半分","各部分の電圧の合計＝電源電圧","各部分すべて同じ","抵抗に比例する"],ans:1,ex:"直列回路では、各部分の電圧の合計が電源電圧に等しくなります。"},
-      {q:"並列回路の電流の合計は？",choices:["各枝路の電流は全部同じ","枝路を流れる電流の合計＝幹線の電流","電源電圧に等しい","枝路の数で割る"],ans:1,ex:"並列回路では、各枝路を流れる電流の合計が幹線（電源から出る）の電流に等しくなります。"},
-      {q:"電球を並列にするほど、全体の明るさはどうなる？",choices:["暗くなる","変わらない","明るくなる","消える"],ans:2,ex:"並列に接続するほど電池から電流をたくさん取り出せるので、全体の明るさ（消費電力）は大きくなります。"},
-      {q:"家庭のコンセントは直列？並列？",choices:["直列","場所による","どちらともいえない","並列"],ans:3,ex:"家庭のコンセントはすべて並列につながっています。だから1つの電器を使っても他には影響しません。"},
-      {q:"電流の流れる向きは、電池の+極から出てどこに戻る？",choices:["+極に戻る","+極から出ない","電流は流れない","−極に戻る"],ans:3,ex:"電流は電池の+極から出て、導線・電球などを通り、−極に戻ります（電子の流れとは逆向き）。"}
-    ]
-  },
-  {
-    id: 7,
-    name: "オームの法則編",
-    icon: "🔢",
-    priority: true,
-    questions: [
-      {q:"電圧6V、抵抗3Ω のとき、電流は何A？",choices:["1A","18A","3A","2A"],ans:3,ex:"I = V ÷ R = 6 ÷ 3 = 2A です。オームの法則 V = I × R を変形してI = V ÷ R で求めます。"},
-      {q:"電流2A、抵抗5Ω のとき、電圧は何V？",choices:["3V","7V","10V","2.5V"],ans:2,ex:"V = I × R = 2 × 5 = 10V です。"},
-      {q:"電圧12V、電流3A のとき、抵抗は何Ω？",choices:["36Ω","4Ω","9Ω","15Ω"],ans:1,ex:"R = V ÷ I = 12 ÷ 3 = 4Ω です。"},
-      {q:"電圧9V、抵抗3Ω のとき、電流は何A？",choices:["27A","6A","3A","12A"],ans:2,ex:"I = V ÷ R = 9 ÷ 3 = 3A です。"},
-      {q:"電流4A、抵抗3Ω のとき、電圧は何V？",choices:["1.3V","7V","12V","16V"],ans:2,ex:"V = I × R = 4 × 3 = 12V です。"},
-      {q:"電圧10V、電流2A のとき、抵抗は何Ω？",choices:["20Ω","12Ω","8Ω","5Ω"],ans:3,ex:"R = V ÷ I = 10 ÷ 2 = 5Ω です。"},
-      {q:"電圧6V、抵抗2Ω のとき、電流は何A？",choices:["12A","3A","8A","4A"],ans:1,ex:"I = V ÷ R = 6 ÷ 2 = 3A です。"},
-      {q:"電流5A、抵抗4Ω のとき、電圧は何V？",choices:["9V","1.25V","20V","25V"],ans:2,ex:"V = I × R = 5 × 4 = 20V です。"},
-      {q:"電圧20V、電流4A のとき、抵抗は何Ω？",choices:["80Ω","5Ω","16Ω","24Ω"],ans:1,ex:"R = V ÷ I = 20 ÷ 4 = 5Ω です。"},
-      {q:"電圧15V、抵抗5Ω のとき、電流は何A？",choices:["75A","10A","3A","20A"],ans:2,ex:"I = V ÷ R = 15 ÷ 5 = 3A です。"},
-      {q:"電流3A、抵抗6Ω のとき、電圧は何V？",choices:["9V","18V","2V","12V"],ans:1,ex:"V = I × R = 3 × 6 = 18V です。"},
-      {q:"電圧8V、電流2A のとき、抵抗は何Ω？",choices:["16Ω","6Ω","4Ω","10Ω"],ans:2,ex:"R = V ÷ I = 8 ÷ 2 = 4Ω です。"},
-      {q:"電圧12V、抵抗4Ω のとき、電流は何A？",choices:["48A","8A","3A","16A"],ans:2,ex:"I = V ÷ R = 12 ÷ 4 = 3A です。"},
-      {q:"電流6A、抵抗2Ω のとき、電圧は何V？",choices:["3V","8V","12V","4V"],ans:2,ex:"V = I × R = 6 × 2 = 12V です。"},
-      {q:"電圧18V、電流6A のとき、抵抗は何Ω？",choices:["108Ω","24Ω","3Ω","12Ω"],ans:2,ex:"R = V ÷ I = 18 ÷ 6 = 3Ω です。"},
-      {q:"電圧4V、抵抗2Ω のとき、電流は何A？",choices:["8A","6A","2A","4A"],ans:2,ex:"I = V ÷ R = 4 ÷ 2 = 2A です。"},
-      {q:"電流2A、抵抗8Ω のとき、電圧は何V？",choices:["4V","10V","16V","6V"],ans:2,ex:"V = I × R = 2 × 8 = 16V です。"},
-      {q:"電圧16V、電流4A のとき、抵抗は何Ω？",choices:["64Ω","12Ω","4Ω","20Ω"],ans:2,ex:"R = V ÷ I = 16 ÷ 4 = 4Ω です。"},
-      {q:"電圧9V、抵抗9Ω のとき、電流は何A？",choices:["81A","18A","1A","3A"],ans:2,ex:"I = V ÷ R = 9 ÷ 9 = 1A です。"},
-      {q:"オームの法則の式を正しく表しているのは？",choices:["I = V × R","R = V × I","V = I ÷ R","V = I × R"],ans:3,ex:"V = I × R がオームの法則です。V（電圧）= I（電流）× R（抵抗）。変形するとI = V÷R、R = V÷I です。"}
-    ]
-  },
-  {
-    id: 8,
-    name: "合成抵抗編",
-    icon: "🔌",
-    priority: false,
-    questions: [
-      {q:"5Ω と10Ω を直列につなぐと合成抵抗は？",choices:["50Ω","5Ω","2Ω","15Ω"],ans:3,ex:"直列の合成抵抗は足し算です。5 + 10 = 15Ω です。"},
-      {q:"3Ω と7Ω を直列につなぐと合成抵抗は？",choices:["10Ω","4Ω","21Ω","2.1Ω"],ans:0,ex:"直列の合成抵抗 = 3 + 7 = 10Ω です。"},
-      {q:"10Ω と10Ω を並列につなぐと合成抵抗は？",choices:["20Ω","5Ω","10Ω","1Ω"],ans:1,ex:"同じ抵抗値2個の並列接続：R/2 = 10÷2 = 5Ω です。"},
-      {q:"6Ω と6Ω を並列につなぐと合成抵抗は？",choices:["12Ω","6Ω","3Ω","36Ω"],ans:2,ex:"同じ抵抗値2個の並列：6÷2 = 3Ω です。"},
-      {q:"4Ω と4Ω を直列につなぐと合成抵抗は？",choices:["2Ω","16Ω","8Ω","4Ω"],ans:2,ex:"直列の合成抵抗 = 4 + 4 = 8Ω です。"},
-      {q:"20Ω と20Ω を並列につなぐと合成抵抗は？",choices:["40Ω","10Ω","20Ω","400Ω"],ans:1,ex:"同じ値2個の並列：20÷2 = 10Ω です。"},
-      {q:"2Ω と8Ω を直列につなぐと合成抵抗は？",choices:["16Ω","6Ω","10Ω","4Ω"],ans:2,ex:"直列の合成抵抗 = 2 + 8 = 10Ω です。"},
-      {q:"直列回路の合成抵抗の求め方は？",choices:["掛け算","割り算","引き算","足し算"],ans:3,ex:"直列回路では各抵抗を足し算します。R合 = R1 + R2 + … です。"},
-      {q:"並列回路で同じ抵抗R を2個つなぐと合成抵抗は？",choices:["R×2","R","R÷2","1"],ans:2,ex:"同じ抵抗2個を並列にすると合成抵抗はR÷2になります。並列にすると電流の通り道が増えるため抵抗が減ります。"},
-      {q:"3Ω と3Ω と3Ω を直列につなぐと合成抵抗は？",choices:["1Ω","6Ω","9Ω","27Ω"],ans:2,ex:"直列の合成抵抗 = 3 + 3 + 3 = 9Ω です。"},
-      {q:"抵抗を並列にするほど合成抵抗はどうなる？",choices:["大きくなる","変わらない","小さくなる","1になる"],ans:2,ex:"並列にするほど電流の通り道が増えるため、合成抵抗は小さくなります。"},
-      {q:"抵抗を直列にするほど合成抵抗はどうなる？",choices:["小さくなる","変わらない","1になる","大きくなる"],ans:3,ex:"直列にするほど電流の通り道に抵抗が増えるため、合成抵抗は大きくなります。"},
-      {q:"5Ω と5Ω を直列につなぐと合成抵抗は？",choices:["2.5Ω","5Ω","25Ω","10Ω"],ans:3,ex:"直列の合成抵抗 = 5 + 5 = 10Ω です。"},
-      {q:"8Ω と8Ω を並列につなぐと合成抵抗は？",choices:["16Ω","4Ω","8Ω","64Ω"],ans:1,ex:"同じ値2個の並列：8÷2 = 4Ω です。"},
-      {q:"1Ω と9Ω を直列につなぐと合成抵抗は？",choices:["10Ω","8Ω","9Ω","0.9Ω"],ans:0,ex:"直列の合成抵抗 = 1 + 9 = 10Ω です。"},
-      {q:"12Ω と12Ω を並列につなぐと合成抵抗は？",choices:["24Ω","12Ω","6Ω","144Ω"],ans:2,ex:"同じ値2個の並列：12÷2 = 6Ω です。"},
-      {q:"4Ω と6Ω を直列につなぐと合成抵抗は？",choices:["24Ω","2Ω","12Ω","10Ω"],ans:3,ex:"直列の合成抵抗 = 4 + 6 = 10Ω です。"},
-      {q:"直列回路で抵抗が増えると、同じ電圧のとき電流はどうなる？",choices:["増える","変わらない","ゼロになる","減る"],ans:3,ex:"V = I × R より、電圧Vが一定でRが増えるとI = V÷R なので電流は減ります。"},
-      {q:"電源9Vに3Ω と6Ω を直列につなぐと、回路に流れる電流は何A？",choices:["3A","1.5A","1A","2A"],ans:2,ex:"合成抵抗 = 3 + 6 = 9Ω。電流 I = 9V ÷ 9Ω = 1A です。"},
-      {q:"電源6Vに6Ω と6Ω を並列につなぐと、各抵抗に流れる電流は何A？",choices:["2A","0.5A","1A","6A"],ans:2,ex:"並列では各部分に電源と同じ電圧がかかります。I = 6V ÷ 6Ω = 1A が各枝路に流れます。"}
-    ]
-  },
-  {
-    id: 9,
-    name: "向丘中 予想問題",
-    icon: "📝",
-    priority: false,
-    questions: [] // 全範囲からランダムで動的生成
-  }
+const PRAISE = ["その調子！","よく覚えていたね！","テストでも出やすいぞ！","1点ゲット！","ここは必ず取ろう！","いい感じ！","完璧！","さすが！"];
+const ENCOURAGE = ["ここは覚えよう！","まだ大丈夫！","次で取り返そう！","理科は暗記で伸びる！","よく出る用語だよ！","もう一回解こう！","ここが山場！","覚えれば点になる！"];
+
+// =============================================
+// 問題データ（ChatGPT作成 - 変更禁止）
+// =============================================
+const stage1 = [
+{question:"地表の岩石が長い時間をかけてくずれる現象を何という？",choices:["侵食","風化","運搬","堆積"],answer:1,explanation:"岩石が気温変化や水などによってくずれる現象を風化という。",comment:"まずは基本用語を覚えよう！"},
+{question:"川の流れによって土砂が削り取られるはたらきを何という？",choices:["風化","運搬","侵食","堆積"],answer:2,explanation:"川や波が地面を削るはたらきを侵食という。",comment:"風化→侵食→運搬→堆積の順番が重要！"},
+{question:"川が土砂を下流へ運ぶはたらきを何という？",choices:["運搬","堆積","侵食","風化"],answer:0,explanation:"土砂を運ぶはたらきを運搬という。",comment:"テスト頻出！"},
+{question:"運ばれた土砂が積もることを何という？",choices:["侵食","堆積","風化","運搬"],answer:1,explanation:"土砂が積もることを堆積という。",comment:"あと一歩で地層完成！"},
+{question:"粒の大きさが最も大きいものはどれ？",choices:["泥","砂","れき","火山灰"],answer:2,explanation:"れき→砂→泥の順に粒が大きい。",comment:"粒の大きさは超重要！"},
+{question:"粒の大きさが最も小さいものはどれ？",choices:["れき","砂","泥","小石"],answer:2,explanation:"泥が最も細かい粒でできている。",comment:"よく出るぞ！"},
+{question:"れきが固まってできた岩石を何という？",choices:["泥岩","砂岩","石灰岩","れき岩"],answer:3,explanation:"れきが固まるとれき岩になる。",comment:"岩石名は必ず覚えよう！"},
+{question:"砂が固まってできた岩石を何という？",choices:["砂岩","泥岩","れき岩","凝灰岩"],answer:0,explanation:"砂が固まると砂岩になる。",comment:"定番問題！"},
+{question:"泥が固まってできた岩石を何という？",choices:["砂岩","泥岩","れき岩","石灰岩"],answer:1,explanation:"泥が固まると泥岩になる。",comment:"1点問題だよ！"},
+{question:"火山灰が固まってできた岩石は？",choices:["れき岩","泥岩","凝灰岩","砂岩"],answer:2,explanation:"火山灰が固まると凝灰岩になる。",comment:"火山ともつながる内容！"},
+{question:"地層の重なり方を柱のように表した図を何という？",choices:["地質図","柱状図","地層図","断面図"],answer:1,explanation:"地層の厚さや重なり方を示した図を柱状図という。",comment:"資料問題でよく出る！"},
+{question:"同じ時期に広い範囲で積もった地層を見分ける手がかりとなる地層を何という？",choices:["示準化石","示相化石","鍵層","断層"],answer:2,explanation:"広い範囲で見られる特徴的な地層を鍵層という。",comment:"凝灰岩は鍵層になりやすい！"},
+{question:"海面が上昇したり土地が沈降したりして海が陸地へ広がる現象を何という？",choices:["海退","海進","隆起","断層"],answer:1,explanation:"海が陸へ広がる現象を海進という。",comment:"海進と海退はセットで覚える！"},
+{question:"海面が下がったり土地が隆起したりして海が後退する現象を何という？",choices:["海進","海底拡大","海退","侵食"],answer:2,explanation:"海が沖へ後退する現象を海退という。",comment:"海進の反対！"},
+{question:"土地がゆっくり高くなる現象を何という？",choices:["沈降","侵食","隆起","風化"],answer:2,explanation:"土地が高くなることを隆起という。",comment:"漢字も書けるように！"},
+{question:"土地がゆっくり低くなる現象を何という？",choices:["隆起","風化","沈降","運搬"],answer:2,explanation:"土地が低くなることを沈降という。",comment:"海進の原因になることもある！"},
+{question:"海底で最も沖合に堆積しやすいものはどれ？",choices:["れき","砂","泥","小石"],answer:2,explanation:"細かい泥ほど遠くまで運ばれる。",comment:"粒が小さいほど遠くへ！"},
+{question:"海岸近くに堆積しやすいものはどれ？",choices:["泥","砂","れき","火山灰"],answer:2,explanation:"重いれきは遠くまで運ばれにくい。",comment:"粒が大きいほど手前！"},
+{question:"地層は一般的にどちらが古い？",choices:["上の地層","下の地層","同じ","わからない"],answer:1,explanation:"地層は下ほど古く、上ほど新しい。",comment:"超頻出！"},
+{question:"地層ができる主な場所はどこ？",choices:["空中","海や湖の底","山の頂上","建物の中"],answer:1,explanation:"地層は海や湖の底などで堆積してできる。",comment:"最後も基本問題！"}
 ];
 
-// ステージ9は全範囲から生成
-function buildStage9() {
-  const pool = [];
-  // 地層30% → 6問, 地震25% → 5問, 火山岩石20% → 4問, プレート10% → 2問, 電流15% → 3問
-  const picks = [[0,6],[2,5],[3,4],[4,2],[5,3]];
-  picks.forEach(([si, n]) => {
-    const qs = shuffle([...STAGES[si].questions]);
-    pool.push(...qs.slice(0, n));
-  });
-  STAGES[8].questions = shuffle(pool).slice(0, 20);
-}
+const stage2 = [
+{question:"地層が堆積した年代を知る手がかりになる化石を何という？",choices:["示相化石","示準化石","標準化石","年代化石"],answer:1,explanation:"地層の年代を知る手がかりになる化石を示準化石という。",comment:"示準化石＝年代！"},
+{question:"地層が堆積した当時の環境を知る手がかりになる化石を何という？",choices:["示準化石","示相化石","環境化石","時代化石"],answer:1,explanation:"当時の環境を知る手がかりになる化石を示相化石という。",comment:"示相化石＝環境！"},
+{question:"アンモナイトは、主にどの時代を示す示準化石？",choices:["古生代","中生代","新生代","現代"],answer:1,explanation:"アンモナイトは中生代を代表する示準化石。",comment:"アンモナイト＝中生代！"},
+{question:"三葉虫は、主にどの時代を示す示準化石？",choices:["古生代","中生代","新生代","現代"],answer:0,explanation:"三葉虫は古生代を代表する示準化石。",comment:"三葉虫＝古生代！"},
+{question:"フズリナは、主にどの時代を示す示準化石？",choices:["古生代","中生代","新生代","現代"],answer:0,explanation:"フズリナは古生代を代表する示準化石。",comment:"フズリナも古生代！"},
+{question:"ビカリアは、主にどの時代を示す示準化石？",choices:["古生代","中生代","新生代","現代"],answer:2,explanation:"ビカリアは新生代を代表する示準化石。",comment:"ビカリア＝新生代！"},
+{question:"サンゴの化石からわかる環境として正しいものはどれ？",choices:["冷たく深い海","暖かく浅い海","火山の近く","乾燥した砂漠"],answer:1,explanation:"サンゴは暖かく浅い海にすむため、当時の環境がわかる。",comment:"サンゴ＝暖かく浅い海！"},
+{question:"シジミの化石からわかる環境として正しいものはどれ？",choices:["湖や河口付近","深い海","火山の火口","氷河"],answer:0,explanation:"シジミは湖や河口付近などにすむ生物。",comment:"シジミ＝湖・河口！"},
+{question:"示準化石として適している生物の特徴はどれ？",choices:["長い時代にわたり少数いた","短い時代に広い範囲にいた","狭い地域だけにいた","化石になりにくい"],answer:1,explanation:"示準化石は、短い時代に広い範囲に生息していた生物が適している。",comment:"短い時代・広い範囲！"},
+{question:"示相化石として適している生物の特徴はどれ？",choices:["すむ環境が決まっている","どこにでもすむ","時代が短い","空を飛ぶ"],answer:0,explanation:"示相化石は、すむ環境が決まっている生物が適している。",comment:"環境が決まっている生物！"},
+{question:"アンモナイトの化石が見つかった地層は、どの時代の地層と考えられる？",choices:["古生代","中生代","新生代","未来"],answer:1,explanation:"アンモナイトは中生代を示す化石なので、その地層は中生代と考えられる。",comment:"アンモナイトを見たら中生代！"},
+{question:"三葉虫の化石が見つかった地層は、どの時代の地層と考えられる？",choices:["古生代","中生代","新生代","現代"],answer:0,explanation:"三葉虫は古生代を示す化石。",comment:"三葉虫はかなり古い！"},
+{question:"ビカリアの化石が見つかった地層は、どの時代の地層と考えられる？",choices:["古生代","中生代","新生代","現代"],answer:2,explanation:"ビカリアは新生代を示す化石。",comment:"ビカリア＝新しい時代！"},
+{question:"フズリナと同じ時代を示す化石はどれ？",choices:["アンモナイト","ビカリア","三葉虫","ナウマンゾウ"],answer:2,explanation:"フズリナと三葉虫はどちらも古生代を示す。",comment:"古生代コンビ！"},
+{question:"アンモナイトと同じ時代を示すものとして正しいものはどれ？",choices:["恐竜","ビカリア","三葉虫","フズリナ"],answer:0,explanation:"恐竜は中生代に栄えた生物。",comment:"中生代＝恐竜の時代！"},
+{question:"サンゴの化石は、示準化石と示相化石のどちらにあたる？",choices:["示準化石","示相化石","どちらでもない","火山化石"],answer:1,explanation:"サンゴは当時の環境を知る手がかりになるため示相化石。",comment:"サンゴは環境を示す！"},
+{question:"アンモナイトの化石は、示準化石と示相化石のどちらにあたる？",choices:["示準化石","示相化石","どちらでもない","環境化石"],answer:0,explanation:"アンモナイトは地層の年代を知る手がかりになるため示準化石。",comment:"アンモナイトは年代！"},
+{question:"地層から化石が見つかると、何がわかることがある？",choices:["天気だけ","地層の年代や環境","地震の震度だけ","電流の大きさ"],answer:1,explanation:"化石から、地層ができた年代や当時の環境を推定できる。",comment:"化石は情報の宝庫！"},
+{question:"古い順に正しく並んでいるものはどれ？",choices:["古生代→中生代→新生代","中生代→古生代→新生代","新生代→中生代→古生代","古生代→新生代→中生代"],answer:0,explanation:"地質年代は、古生代→中生代→新生代の順。",comment:"古・中・新で覚えよう！"},
+{question:"恐竜とアンモナイトが栄えた時代はどれ？",choices:["古生代","中生代","新生代","先カンブリア時代"],answer:1,explanation:"恐竜やアンモナイトは中生代に栄えた。",comment:"中生代は超頻出！"}
+];
+
+const stage3 = [
+{question:"地震が最初に発生した地下の場所を何という？",choices:["震央","震源","断層","火口"],answer:1,explanation:"地震が発生した地下の場所を震源という。",comment:"震源と震央はセットで覚えよう！"},
+{question:"震源の真上の地表の地点を何という？",choices:["震源","断層","震央","観測点"],answer:2,explanation:"震源の真上の地表の地点を震央という。",comment:"超頻出用語！"},
+{question:"地震のゆれを記録する装置を何という？",choices:["温度計","気圧計","地震計","電流計"],answer:2,explanation:"地震のゆれを記録する装置を地震計という。",comment:"1点問題！"},
+{question:"最初に到着する波はどれ？",choices:["S波","P波","津波","表面波"],answer:1,explanation:"P波は速いため最初に到着する。",comment:"P＝Primary（最初）"},
+{question:"後から到着する波はどれ？",choices:["P波","S波","音波","光波"],answer:1,explanation:"S波はP波より遅い。",comment:"S波＝遅い！"},
+{question:"初期微動を起こす波はどれ？",choices:["S波","津波","P波","表面波"],answer:2,explanation:"P波が初期微動を起こす。",comment:"必ず覚える！"},
+{question:"主要動を起こす波はどれ？",choices:["P波","S波","音波","津波"],answer:1,explanation:"S波が主要動を起こす。",comment:"大きなゆれ＝S波！"},
+{question:"初期微動とは何の波だけが届いている状態？",choices:["S波","P波","津波","表面波"],answer:1,explanation:"P波だけが届いている時間を初期微動という。",comment:"超重要！"},
+{question:"主要動が始まる原因となる波は？",choices:["P波","S波","音波","電波"],answer:1,explanation:"S波が到着すると主要動が始まる。",comment:"主要動＝S波！"},
+{question:"P波とS波の到着時刻の差を利用して求められるものは？",choices:["震源距離","震度","気温","標高"],answer:0,explanation:"初期微動継続時間から震源距離を求める。",comment:"計算問題の基本！"},
+{question:"震源から遠いほど初期微動継続時間はどうなる？",choices:["短くなる","長くなる","変わらない","0になる"],answer:1,explanation:"震源から遠いほどP波とS波の到着差が大きくなる。",comment:"グラフ問題で頻出！"},
+{question:"震度とは何を表す？",choices:["地震の規模","各地点のゆれの強さ","津波の高さ","震源の深さ"],answer:1,explanation:"震度は各地点でのゆれの強さを表す。",comment:"震度とマグニチュードを区別！"},
+{question:"マグニチュードとは何を表す？",choices:["各地点のゆれ","地震の規模","津波の高さ","震源距離"],answer:1,explanation:"マグニチュードは地震そのものの規模。",comment:"よく比較される！"},
+{question:"同じ地震でも震度が場所によって違うのはなぜ？",choices:["地震の規模が変わるから","震源からの距離などが違うから","気温が違うから","時間が違うから"],answer:1,explanation:"震源からの距離などによって震度は変わる。",comment:"理解問題！"},
+{question:"P波の特徴として正しいものは？",choices:["遅い","速い","大きなゆれ","津波を起こす"],answer:1,explanation:"P波は速く伝わる。",comment:"まずP波！"},
+{question:"S波の特徴として正しいものは？",choices:["速い","最初に届く","遅い","音波"],answer:2,explanation:"S波はP波より遅い。",comment:"S＝Second！"},
+{question:"震源から80km離れた地点にP波が10秒で到着した。P波の速さは？",choices:["4km/s","6km/s","8km/s","10km/s"],answer:2,explanation:"80÷10＝8km/s",comment:"速さ＝距離÷時間"},
+{question:"震源から60km離れた地点にP波が10秒で到着した。速さは？",choices:["4km/s","5km/s","6km/s","8km/s"],answer:2,explanation:"60÷10＝6km/s",comment:"落ち着いて計算！"},
+{question:"P波の速さが8km/s、20秒かかった。震源距離は？",choices:["120km","140km","160km","180km"],answer:2,explanation:"8×20＝160km",comment:"距離＝速さ×時間"},
+{question:"P波の速さが6km/s、20秒かかった。震源距離は？",choices:["100km","120km","140km","160km"],answer:1,explanation:"6×20＝120km",comment:"計算は確実に！"},
+{question:"主要動開始時刻14時30分25秒、初期微動開始時刻14時30分10秒。初期微動継続時間は？",choices:["10秒","15秒","20秒","25秒"],answer:1,explanation:"25−10＝15秒",comment:"引き算だけ！"},
+{question:"主要動開始時刻9時10分40秒、初期微動開始時刻9時10分25秒。初期微動継続時間は？",choices:["10秒","15秒","20秒","25秒"],answer:1,explanation:"40−25＝15秒",comment:"テストで出る形！"},
+{question:"地震が起こる原因として最も適切なのは？",choices:["風","雲","岩石のずれ","雨"],answer:2,explanation:"地下の岩石が急にずれることで地震が起こる。",comment:"基本知識！"},
+{question:"地震によって地層がずれることを何という？",choices:["しゅう曲","断層","侵食","風化"],answer:1,explanation:"地層がずれる現象を断層という。",comment:"よく出る！"},
+{question:"地震によって発生することがある大きな波を何という？",choices:["高潮","津波","波浪","海流"],answer:1,explanation:"海底地震によって津波が発生することがある。",comment:"防災知識も大切！"},
+{question:"P波が先に届く理由は？",choices:["波が大きいから","伝わる速さが速いから","地面に近いから","音だから"],answer:1,explanation:"P波はS波より速く伝わる。",comment:"理由まで覚えよう！"},
+{question:"初期微動継続時間が長い地点は震源からどうなっている？",choices:["近い","遠い","真上","わからない"],answer:1,explanation:"遠いほど差が大きくなる。",comment:"頻出グラフ問題！"},
+{question:"震度6弱と震度3ではどちらが揺れが大きい？",choices:["震度3","同じ","震度6弱","わからない"],answer:2,explanation:"数字が大きいほど揺れは強い。",comment:"常識問題！"},
+{question:"同じ地震ならマグニチュードは地点によってどうなる？",choices:["変わる","同じ","半分になる","倍になる"],answer:1,explanation:"マグニチュードは地震そのものの規模なので同じ。",comment:"震度との違い！"},
+{question:"地震の規模を表す値はどれ？",choices:["震度","マグニチュード","震源距離","初期微動"],answer:1,explanation:"地震の規模を表すのはマグニチュード。",comment:"最後も超重要！"}
+];
+
+const stage4 = [
+{question:"地下で高温でどろどろに溶けた岩石を何という？",choices:["溶岩","火山灰","マグマ","火山弾"],answer:2,explanation:"地下にある溶けた岩石をマグマという。",comment:"火山分野の最重要語句！"},
+{question:"地表に出てきたマグマを何という？",choices:["溶岩","火山灰","火山ガス","火山弾"],answer:0,explanation:"地表に出たマグマを溶岩という。",comment:"マグマと溶岩を区別！"},
+{question:"火山から噴き出した細かい粒を何という？",choices:["火山弾","火山灰","軽石","砂"],answer:1,explanation:"細かい粒状のものを火山灰という。",comment:"よく出る基本問題！"},
+{question:"火山から噴き出す気体を何という？",choices:["火山灰","水蒸気","火山ガス","二酸化炭素"],answer:2,explanation:"火山から出る気体をまとめて火山ガスという。",comment:"火山灰と混同注意！"},
+{question:"火山から飛び出した大きな岩石を何という？",choices:["火山弾","火山灰","軽石","溶岩"],answer:0,explanation:"大きなかたまりは火山弾という。",comment:"サイズで区別！"},
+{question:"現在も活動する可能性がある火山を何という？",choices:["死火山","活火山","休火山","新火山"],answer:1,explanation:"活動する可能性がある火山を活火山という。",comment:"ニュースでもよく出る！"},
+{question:"ねばりけの強いマグマでできやすい火山は？",choices:["盾状火山","成層火山","カルデラ","海底火山"],answer:1,explanation:"ねばりけが強いと成層火山になりやすい。",comment:"火山の形は頻出！"},
+{question:"ねばりけの弱いマグマでできやすい火山は？",choices:["盾状火山","成層火山","火山ドーム","カルデラ"],answer:0,explanation:"ねばりけが弱いと広がって盾状火山になる。",comment:"なだらかな形！"},
+{question:"火山岩ができる場所はどこ？",choices:["地下深く","地表付近","海底だけ","空中"],answer:1,explanation:"火山岩は地表付近で急に冷えてできる。",comment:"火山岩＝地表！"},
+{question:"深成岩ができる場所はどこ？",choices:["地表付近","火口","地下深く","海底"],answer:2,explanation:"深成岩は地下深くでゆっくり冷えてできる。",comment:"深成岩＝地下深く！"},
+{question:"火山岩の特徴として正しいものは？",choices:["粒が大きい","粒が見えやすい","粒が細かい","化石を含む"],answer:2,explanation:"急に冷えるので粒が細かい。",comment:"急冷＝細かい！"},
+{question:"深成岩の特徴として正しいものは？",choices:["粒が細かい","粒が見えにくい","粒が大きい","軽い"],answer:2,explanation:"ゆっくり冷えるため粒が大きい。",comment:"ゆっくり冷える＝粒大！"},
+{question:"最も色が白っぽい火山岩はどれ？",choices:["玄武岩","安山岩","流紋岩","花こう岩"],answer:2,explanation:"流紋岩は白っぽい火山岩。",comment:"白→流紋岩！"},
+{question:"最も色が黒っぽい火山岩はどれ？",choices:["流紋岩","安山岩","玄武岩","花こう岩"],answer:2,explanation:"玄武岩は黒っぽい火山岩。",comment:"黒→玄武岩！"},
+{question:"流紋岩に対応する深成岩はどれ？",choices:["花こう岩","閃緑岩","はんれい岩","石灰岩"],answer:0,explanation:"流紋岩と花こう岩は同じ成分をもつ。",comment:"セットで覚えよう！"},
+{question:"安山岩に対応する深成岩はどれ？",choices:["花こう岩","閃緑岩","はんれい岩","凝灰岩"],answer:1,explanation:"安山岩に対応する深成岩は閃緑岩。",comment:"頻出ペア！"},
+{question:"玄武岩に対応する深成岩はどれ？",choices:["花こう岩","閃緑岩","はんれい岩","泥岩"],answer:2,explanation:"玄武岩に対応する深成岩ははんれい岩。",comment:"テストに出やすい！"},
+{question:"無色透明でガラスのような鉱物はどれ？",choices:["長石","石英","黒雲母","輝石"],answer:1,explanation:"石英は無色透明でガラスのように見える。",comment:"鉱物問題の定番！"},
+{question:"黒くて薄くはがれやすい鉱物はどれ？",choices:["石英","長石","黒雲母","かんらん石"],answer:2,explanation:"黒雲母は黒く薄くはがれる。",comment:"名前も特徴も覚えよう！"},
+{question:"白色やピンク色をしていることが多い鉱物はどれ？",choices:["長石","石英","黒雲母","輝石"],answer:0,explanation:"長石は白色やピンク色をしていることが多い。",comment:"最後の1問！"}
+];
+
+const stage5 = [
+{question:"地球の表面をおおう岩盤を何という？",choices:["マグマ","プレート","地層","マントル"],answer:1,explanation:"地球の表面はプレートという大きな岩盤でおおわれている。",comment:"プレートは超重要語句！"},
+{question:"海の下にあるプレートを何という？",choices:["大陸プレート","海洋プレート","地震プレート","火山プレート"],answer:1,explanation:"海底をつくるプレートを海洋プレートという。",comment:"まずは基本！"},
+{question:"大陸をのせているプレートを何という？",choices:["海洋プレート","大陸プレート","地震プレート","マグマプレート"],answer:1,explanation:"陸地をのせているプレートを大陸プレートという。",comment:"海洋プレートとの区別！"},
+{question:"海洋プレートと大陸プレートがぶつかる場所を何という？",choices:["海溝","平野","高原","盆地"],answer:0,explanation:"プレートがぶつかる場所に海溝ができる。",comment:"頻出問題！"},
+{question:"日本の近くに多く見られる海底の深い溝を何という？",choices:["トラフ","海溝","断層","火口"],answer:1,explanation:"プレートの境界には海溝ができる。",comment:"地図問題にも出る！"},
+{question:"海洋プレートは大陸プレートの下へどうなる？",choices:["浮き上がる","沈み込む","消える","割れる"],answer:1,explanation:"海洋プレートは大陸プレートの下へ沈み込む。",comment:"絶対覚えよう！"},
+{question:"プレートの動きによって起こりやすいものは？",choices:["地震","虹","台風","雪"],answer:0,explanation:"プレートが動くことで地震が発生する。",comment:"超重要！"},
+{question:"プレートの動きによって起こりやすいものは？",choices:["火山活動","月食","日食","流れ星"],answer:0,explanation:"火山活動もプレート運動と関係している。",comment:"火山とのつながり！"},
+{question:"海底で大きな地震が起こると発生することがあるものは？",choices:["高潮","津波","竜巻","雪崩"],answer:1,explanation:"海底地震によって津波が発生することがある。",comment:"防災にも重要！"},
+{question:"地震によって地面がずれる現象を何という？",choices:["断層","侵食","堆積","風化"],answer:0,explanation:"地層や地面がずれる現象を断層という。",comment:"よく出る用語！"},
+{question:"地層が押されて曲がる現象を何という？",choices:["断層","しゅう曲","風化","堆積"],answer:1,explanation:"地層が曲がる現象をしゅう曲という。",comment:"断層との違いに注意！"},
+{question:"日本で地震が多い理由として最も適切なものは？",choices:["雨が多いから","火山が多いから","プレートの境界付近だから","山が多いから"],answer:2,explanation:"日本は複数のプレートの境界付近にある。",comment:"入試にも出る！"},
+{question:"日本で火山が多い理由として正しいものは？",choices:["海が近いから","プレートが関係しているから","川が多いから","森林が多いから"],answer:1,explanation:"プレートの沈み込みによって火山活動が活発になる。",comment:"地震と火山はセット！"},
+{question:"海洋プレートと大陸プレートでは、より重いのはどちら？",choices:["海洋プレート","大陸プレート","同じ","わからない"],answer:0,explanation:"海洋プレートの方が重いため沈み込む。",comment:"少し発展問題！"},
+{question:"海溝ができる主な原因は？",choices:["風化","侵食","プレートの沈み込み","火山の噴火"],answer:2,explanation:"海洋プレートが沈み込むことで海溝ができる。",comment:"海溝＝沈み込み！"},
+{question:"津波について正しい説明はどれ？",choices:["強風で起こる","海底地震で起こることがある","必ず台風で起こる","雨で起こる"],answer:1,explanation:"海底地震によって海水が大きく動き津波が発生する。",comment:"防災問題！"},
+{question:"プレートはまったく動かない。○か×か。",choices:["○","×","半分○","わからない"],answer:1,explanation:"プレートはゆっくりと動いている。",comment:"引っかけ注意！"},
+{question:"プレートが動く原因となる地球内部の熱の流れを何という？",choices:["対流","風","侵食","蒸発"],answer:0,explanation:"マントルの対流によってプレートが動く。",comment:"余裕があれば覚えよう！"},
+{question:"プレート運動と最も関係が深いものはどれ？",choices:["地震","火山","津波","すべて"],answer:3,explanation:"地震・火山・津波はいずれもプレート運動と深く関係する。",comment:"まとめ問題！"},
+{question:"日本列島の特徴として正しいものはどれ？",choices:["地震が少ない","火山がない","プレート境界付近にある","砂漠が多い"],answer:2,explanation:"日本はプレート境界付近に位置している。",comment:"最後の問題！"}
+];
+
+const stage6 = [
+{question:"電流とは何の流れとして考えられているか？",choices:["陽子","電子","中性子","原子"],answer:1,explanation:"電流は電子の移動によって流れる。",comment:"電流の正体は電子！"},
+{question:"電子が移動する向きは電流の向きとどうなっている？",choices:["同じ向き","反対向き","途中で変わる","関係ない"],answer:1,explanation:"電子の流れは電流の向きと反対。",comment:"超頻出！"},
+{question:"電流の単位はどれ？",choices:["V","Ω","A","W"],answer:2,explanation:"電流の単位はアンペア(A)。",comment:"まずは単位！"},
+{question:"電圧の単位はどれ？",choices:["A","V","Ω","J"],answer:1,explanation:"電圧の単位はボルト(V)。",comment:"V＝ボルト！"},
+{question:"抵抗の単位はどれ？",choices:["A","V","Ω","W"],answer:2,explanation:"抵抗の単位はオーム(Ω)。",comment:"Ωはよく出る！"},
+{question:"電流の大きさを測る器具は？",choices:["電圧計","電流計","温度計","地震計"],answer:1,explanation:"電流の大きさは電流計で測定する。",comment:"1点問題！"},
+{question:"電圧を測る器具は？",choices:["電流計","電圧計","電池","導線"],answer:1,explanation:"電圧は電圧計で測定する。",comment:"名前そのまま！"},
+{question:"電流計は回路にどのようにつなぐ？",choices:["並列","直列","どちらでもよい","つながない"],answer:1,explanation:"電流計は電流の流れる道に直列につなぐ。",comment:"超重要！"},
+{question:"電圧計は回路にどのようにつなぐ？",choices:["直列","並列","どちらでもよい","つながない"],answer:1,explanation:"電圧計は測りたい部分に並列につなぐ。",comment:"テスト頻出！"},
+{question:"電流を流しやすい物質を何という？",choices:["不導体","絶縁体","導体","半導体"],answer:2,explanation:"電流を流しやすい物質を導体という。",comment:"金属は導体！"},
+{question:"電流をほとんど流さない物質を何という？",choices:["導体","不導体","金属","電池"],answer:1,explanation:"電流を流しにくい物質を不導体という。",comment:"不導体＝絶縁体！"},
+{question:"次のうち導体はどれ？",choices:["ゴム","ガラス","銅","プラスチック"],answer:2,explanation:"銅は電気をよく通す導体。",comment:"金属は基本的に導体！"},
+{question:"次のうち不導体はどれ？",choices:["鉄","アルミニウム","銅","ゴム"],answer:3,explanation:"ゴムは電気を通しにくい。",comment:"よく出る組み合わせ！"},
+{question:"回路が1本道になっている回路を何という？",choices:["並列回路","直列回路","複合回路","交流回路"],answer:1,explanation:"1本道の回路を直列回路という。",comment:"図でよく出る！"},
+{question:"回路が枝分かれしている回路を何という？",choices:["直列回路","並列回路","複合回路","交流回路"],answer:1,explanation:"枝分かれしている回路を並列回路という。",comment:"ここも重要！"},
+{question:"直列回路で電流はどうなる？",choices:["場所によって変わる","どこでも同じ","0になる","増える"],answer:1,explanation:"直列回路では流れる電流はどこでも同じ。",comment:"必ず覚えよう！"},
+{question:"並列回路で電流はどうなる？",choices:["分かれる","必ず同じ","0になる","なくなる"],answer:0,explanation:"並列回路では電流が枝分かれする。",comment:"直列との違い！"},
+{question:"直列回路で電圧はどうなる？",choices:["分かれる","どこでも同じ","0になる","増える"],answer:0,explanation:"直列回路では電圧が分かれる。",comment:"超重要！"},
+{question:"並列回路で各枝の電圧はどうなる？",choices:["分かれる","0になる","同じ","半分になる"],answer:2,explanation:"並列回路では各枝の電圧は等しい。",comment:"よく出る！"},
+{question:"電流の向きはどちら向きと決められている？",choices:["電子の向きと同じ","＋極から－極","－極から＋極","どちらでもよい"],answer:1,explanation:"電流の向きは＋極から－極と決められている。",comment:"最後の重要問題！"}
+];
+
+const stage7 = [
+{question:"オームの法則を表す式はどれ？",choices:["V=I×R","V=I÷R","I=V×R","R=V×I"],answer:0,explanation:"オームの法則は V=I×R。",comment:"まずは公式！"},
+{question:"電圧6V、抵抗3Ωのとき、電流は何A？",choices:["1A","2A","3A","6A"],answer:1,explanation:"6÷3=2A",comment:"基本問題！"},
+{question:"電圧12V、抵抗4Ωのとき、電流は何A？",choices:["2A","3A","4A","6A"],answer:1,explanation:"12÷4=3A",comment:"計算に慣れよう！"},
+{question:"電圧10V、抵抗5Ωのとき、電流は何A？",choices:["1A","2A","3A","5A"],answer:1,explanation:"10÷5=2A",comment:"オームの法則の基本！"},
+{question:"電流2A、抵抗3Ωのとき、電圧は何V？",choices:["5V","6V","8V","10V"],answer:1,explanation:"2×3=6V",comment:"V=I×R"},
+{question:"電流3A、抵抗4Ωのとき、電圧は何V？",choices:["7V","10V","12V","15V"],answer:2,explanation:"3×4=12V",comment:"確実に取ろう！"},
+{question:"電流5A、抵抗2Ωのとき、電圧は何V？",choices:["7V","10V","12V","15V"],answer:1,explanation:"5×2=10V",comment:"よく出る形！"},
+{question:"電圧12V、電流3Aのとき、抵抗は何Ω？",choices:["2Ω","3Ω","4Ω","6Ω"],answer:2,explanation:"12÷3=4Ω",comment:"抵抗を求める問題！"},
+{question:"電圧10V、電流2Aのとき、抵抗は何Ω？",choices:["3Ω","4Ω","5Ω","6Ω"],answer:2,explanation:"10÷2=5Ω",comment:"落ち着いて計算！"},
+{question:"電圧18V、電流3Aのとき、抵抗は何Ω？",choices:["5Ω","6Ω","7Ω","9Ω"],answer:1,explanation:"18÷3=6Ω",comment:"テスト頻出！"},
+{question:"抵抗が大きくなると電流はどうなる？",choices:["大きくなる","小さくなる","変わらない","0になる"],answer:1,explanation:"同じ電圧なら抵抗が大きいほど電流は小さくなる。",comment:"理解問題！"},
+{question:"電圧が大きくなると電流はどうなる？",choices:["大きくなる","小さくなる","変わらない","なくなる"],answer:0,explanation:"同じ抵抗なら電圧が大きいほど電流は大きい。",comment:"グラフ問題でも出る！"},
+{question:"電圧8V、抵抗4Ωのとき、電流は？",choices:["1A","2A","4A","8A"],answer:1,explanation:"8÷4=2A",comment:"基本を確実に！"},
+{question:"電圧15V、抵抗5Ωのとき、電流は？",choices:["2A","3A","4A","5A"],answer:1,explanation:"15÷5=3A",comment:"頻出レベル！"},
+{question:"電流4A、抵抗5Ωのとき、電圧は？",choices:["10V","15V","20V","25V"],answer:2,explanation:"4×5=20V",comment:"公式を使おう！"},
+{question:"電流2A、抵抗8Ωのとき、電圧は？",choices:["12V","14V","16V","18V"],answer:2,explanation:"2×8=16V",comment:"ミスしやすい！"},
+{question:"電圧24V、電流4Aのとき、抵抗は？",choices:["4Ω","5Ω","6Ω","8Ω"],answer:2,explanation:"24÷4=6Ω",comment:"定番問題！"},
+{question:"電圧21V、電流3Aのとき、抵抗は？",choices:["5Ω","6Ω","7Ω","8Ω"],answer:2,explanation:"21÷3=7Ω",comment:"落ち着いて！"},
+{question:"直列回路で抵抗を増やすと電流は？",choices:["増える","減る","変わらない","2倍になる"],answer:1,explanation:"抵抗が大きいほど電流は小さくなる。",comment:"考える問題！"},
+{question:"同じ抵抗で電圧を2倍にすると電流は？",choices:["半分","同じ","2倍","4倍"],answer:2,explanation:"オームの法則より電流も2倍になる。",comment:"比例関係！"},
+{question:"電圧9V、抵抗3Ωのとき、電流は？",choices:["2A","3A","4A","5A"],answer:1,explanation:"9÷3=3A",comment:"簡単な計算！"},
+{question:"電圧16V、抵抗8Ωのとき、電流は？",choices:["1A","2A","3A","4A"],answer:1,explanation:"16÷8=2A",comment:"取りたい問題！"},
+{question:"電流6A、抵抗2Ωのとき、電圧は？",choices:["8V","10V","12V","14V"],answer:2,explanation:"6×2=12V",comment:"よく出る！"},
+{question:"電流7A、抵抗3Ωのとき、電圧は？",choices:["18V","20V","21V","24V"],answer:2,explanation:"7×3=21V",comment:"掛け算注意！"},
+{question:"電圧14V、電流2Aのとき、抵抗は？",choices:["5Ω","6Ω","7Ω","8Ω"],answer:2,explanation:"14÷2=7Ω",comment:"確実に！"},
+{question:"電圧20V、電流5Aのとき、抵抗は？",choices:["2Ω","3Ω","4Ω","5Ω"],answer:2,explanation:"20÷5=4Ω",comment:"1点ゲット！"},
+{question:"オームの法則が成り立つとき、電流と電圧の関係は？",choices:["反比例","比例","無関係","一定"],answer:1,explanation:"電流は電圧に比例する。",comment:"グラフ問題で出る！"},
+{question:"抵抗が一定のとき、電圧を大きくすると電流は？",choices:["減る","増える","変わらない","0になる"],answer:1,explanation:"オームの法則より電流は増える。",comment:"理解しておこう！"},
+{question:"電流が流れにくくする働きを何という？",choices:["電圧","抵抗","導体","電池"],answer:1,explanation:"電流を流れにくくする働きを抵抗という。",comment:"基本用語！"},
+{question:"オームの法則を利用して求められないものはどれ？",choices:["電流","電圧","抵抗","震度"],answer:3,explanation:"震度は地震の単元。",comment:"最後はサービス問題！"}
+];
+
+// ステージ8: 合成抵抗（独自データ - ChatGPTデータ未提供のため維持）
+const stage8 = [
+{question:"5Ωの抵抗と10Ωの抵抗を直列につないだ。全体の抵抗は？",choices:["5Ω","10Ω","15Ω","50Ω"],answer:2,explanation:"直列回路では抵抗を足し算する。5＋10＝15Ω",comment:"直列は足し算！"},
+{question:"3Ωの抵抗と7Ωの抵抗を直列につないだ。全体の抵抗は？",choices:["10Ω","21Ω","4Ω","7Ω"],answer:0,explanation:"3＋7＝10Ω",comment:"まずは基本問題！"},
+{question:"8Ωの抵抗と2Ωの抵抗を直列につないだ。全体の抵抗は？",choices:["6Ω","10Ω","16Ω","4Ω"],answer:1,explanation:"8＋2＝10Ω",comment:"確実に取ろう！"},
+{question:"直列回路で抵抗を増やすと電流はどうなる？",choices:["増える","減る","変わらない","0になる"],answer:1,explanation:"抵抗が大きいほど電流は流れにくくなる。",comment:"理解問題！"},
+{question:"直列回路では電流はどうなる？",choices:["場所によって変わる","どこでも同じ","半分になる","0になる"],answer:1,explanation:"直列回路では流れる電流はどこでも同じ。",comment:"超頻出！"},
+{question:"直列回路では電圧はどうなる？",choices:["分かれる","同じ","0になる","増える"],answer:0,explanation:"直列回路では電圧が分かれる。",comment:"重要ポイント！"},
+{question:"2Ωと4Ωを直列につないだ。全体の抵抗は？",choices:["6Ω","8Ω","2Ω","4Ω"],answer:0,explanation:"2＋4＝6Ω",comment:"足し算だけ！"},
+{question:"10Ωと10Ωを直列につないだ。全体の抵抗は？",choices:["10Ω","20Ω","100Ω","5Ω"],answer:1,explanation:"10＋10＝20Ω",comment:"サービス問題！"},
+{question:"1Ω、2Ω、3Ωを直列につないだ。全体の抵抗は？",choices:["5Ω","6Ω","7Ω","8Ω"],answer:1,explanation:"1＋2＋3＝6Ω",comment:"3個でも足し算！"},
+{question:"直列回路で豆電球を1個増やすと抵抗はどうなる？",choices:["小さくなる","大きくなる","変わらない","0になる"],answer:1,explanation:"抵抗が増えるので全体の抵抗も大きくなる。",comment:"考える問題！"},
+{question:"全体の抵抗が大きくなると電流は？",choices:["増える","減る","同じ","逆流する"],answer:1,explanation:"抵抗が大きいほど電流は小さくなる。",comment:"オームの法則とつながる！"},
+{question:"6Ωと9Ωを直列につないだ。全体の抵抗は？",choices:["15Ω","54Ω","3Ω","9Ω"],answer:0,explanation:"6＋9＝15Ω",comment:"落ち着いて計算！"},
+{question:"4Ωと4Ωを直列につないだ。全体の抵抗は？",choices:["4Ω","8Ω","16Ω","2Ω"],answer:1,explanation:"4＋4＝8Ω",comment:"直列は足し算！"},
+{question:"5Ω、5Ω、5Ωを直列につないだ。全体の抵抗は？",choices:["10Ω","15Ω","20Ω","25Ω"],answer:1,explanation:"5＋5＋5＝15Ω",comment:"よく出る形！"},
+{question:"直列回路で電池を増やすと電圧は？",choices:["増える","減る","同じ","0になる"],answer:0,explanation:"電池を直列につなぐと電圧は大きくなる。",comment:"発展問題！"},
+{question:"直列回路で電流計はどのようにつなぐ？",choices:["直列","並列","どちらでもよい","つながない"],answer:0,explanation:"電流計は直列につなぐ。",comment:"基本事項！"},
+{question:"直列回路で電圧計はどのようにつなぐ？",choices:["直列","並列","どちらでもよい","つながない"],answer:1,explanation:"電圧計は並列につなぐ。",comment:"セットで覚えよう！"},
+{question:"直列回路の特徴として正しいものは？",choices:["電流が分かれる","回路が枝分かれしている","電流はどこでも同じ","電圧はどこでも同じ"],answer:2,explanation:"直列回路では電流はどこでも同じ。",comment:"総復習！"},
+{question:"3Ωと12Ωを直列につないだ。全体の抵抗は？",choices:["15Ω","36Ω","9Ω","12Ω"],answer:0,explanation:"3＋12＝15Ω",comment:"あと少し！"},
+{question:"直列回路の合成抵抗を求める方法は？",choices:["掛け算","割り算","足し算","引き算"],answer:2,explanation:"直列回路では抵抗を足し算する。",comment:"最後の問題！"}
+];
+
+const stage9 = [
+{question:"地表の岩石がくずれる現象を何という？",choices:["侵食","運搬","風化","堆積"],answer:2,explanation:"岩石がくずれる現象を風化という。",comment:"地層分野の基本！"},
+{question:"地層の年代を調べる手がかりとなる化石は？",choices:["示相化石","示準化石","鍵層","断層"],answer:1,explanation:"示準化石は地層の年代を調べる手がかりになる。",comment:"超頻出！"},
+{question:"アンモナイトが栄えた時代は？",choices:["古生代","中生代","新生代","現代"],answer:1,explanation:"アンモナイトは中生代を代表する示準化石。",comment:"必ず取ろう！"},
+{question:"P波が起こすゆれは？",choices:["主要動","初期微動","津波","余震"],answer:1,explanation:"P波は初期微動を起こす。",comment:"地震の最重要事項！"},
+{question:"S波が起こすゆれは？",choices:["初期微動","主要動","余震","津波"],answer:1,explanation:"S波は主要動を起こす。",comment:"P波との違い！"},
+{question:"地震の規模を表す値は？",choices:["震度","マグニチュード","震央","震源"],answer:1,explanation:"地震の規模を表すのはマグニチュード。",comment:"頻出！"},
+{question:"地下で溶けた岩石を何という？",choices:["溶岩","火山灰","マグマ","火山弾"],answer:2,explanation:"地下にあるものをマグマという。",comment:"火山分野の基本！"},
+{question:"流紋岩に対応する深成岩は？",choices:["花こう岩","閃緑岩","はんれい岩","石灰岩"],answer:0,explanation:"流紋岩と花こう岩は同じ成分。",comment:"よく出る組み合わせ！"},
+{question:"最も黒っぽい火山岩は？",choices:["流紋岩","安山岩","玄武岩","花こう岩"],answer:2,explanation:"玄武岩は黒っぽい。",comment:"色で覚えよう！"},
+{question:"海洋プレートは大陸プレートの下へどうなる？",choices:["浮く","沈み込む","消える","割れる"],answer:1,explanation:"海洋プレートは沈み込む。",comment:"プレート分野の基本！"},
+{question:"電流の単位は？",choices:["V","Ω","A","W"],answer:2,explanation:"電流の単位はA。",comment:"まずは単位！"},
+{question:"電圧の単位は？",choices:["A","Ω","V","J"],answer:2,explanation:"電圧の単位はV。",comment:"ここも重要！"},
+{question:"電流計のつなぎ方は？",choices:["並列","直列","どちらでもよい","つながない"],answer:1,explanation:"電流計は直列につなぐ。",comment:"テストによく出る！"},
+{question:"電圧計のつなぎ方は？",choices:["直列","並列","どちらでもよい","つながない"],answer:1,explanation:"電圧計は並列につなぐ。",comment:"セットで覚えよう！"},
+{question:"電圧6V、抵抗3Ωのとき電流は？",choices:["1A","2A","3A","6A"],answer:1,explanation:"6÷3=2A",comment:"オームの法則！"},
+{question:"電流4A、抵抗5Ωのとき電圧は？",choices:["10V","15V","20V","25V"],answer:2,explanation:"4×5=20V",comment:"確実に計算！"},
+{question:"電圧18V、電流3Aのとき抵抗は？",choices:["4Ω","5Ω","6Ω","7Ω"],answer:2,explanation:"18÷3=6Ω",comment:"落ち着いて！"},
+{question:"直列回路で電流はどうなる？",choices:["分かれる","同じ","半分","0になる"],answer:1,explanation:"直列回路では電流はどこでも同じ。",comment:"頻出問題！"},
+{question:"並列回路で各枝の電圧はどうなる？",choices:["半分","分かれる","同じ","0になる"],answer:2,explanation:"並列回路では電圧は同じ。",comment:"間違えやすい！"},
+{question:"地震・火山・津波と最も関係が深いものは？",choices:["気圧","風","プレート運動","降水量"],answer:2,explanation:"地震・火山・津波はプレート運動と深く関係する。",comment:"総まとめ問題！"}
+];
+
+// =============================================
+// ステージ定義
+// =============================================
+const STAGES = [
+  {id:1, name:"地層編",       icon:"🪨", priority:false, data:stage1},
+  {id:2, name:"化石編",       icon:"🦕", priority:true,  data:stage2},
+  {id:3, name:"地震編",       icon:"🌏", priority:true,  data:stage3},
+  {id:4, name:"火山・岩石編", icon:"🌋", priority:true,  data:stage4},
+  {id:5, name:"プレート編",   icon:"🗺️", priority:false, data:stage5},
+  {id:6, name:"電流基礎編",   icon:"⚡", priority:false, data:stage6},
+  {id:7, name:"オームの法則", icon:"🔢", priority:true,  data:stage7},
+  {id:8, name:"合成抵抗編",   icon:"🔌", priority:false, data:stage8},
+  {id:9, name:"向丘中 予想問題",icon:"📝",priority:false, data:stage9}
+];
 
 // =============================================
 // State
@@ -649,8 +423,11 @@ let currentStage = null;
 let questions = [];
 let qIndex = 0;
 let score = 0;
+let streak = 0;
 let answered = false;
-const clearedStages = new Set(JSON.parse(localStorage.getItem('clearedStages') || '[]'));
+let wrongQuestions = [];
+let isReviewMode = false;
+const clearedStages = new Set(JSON.parse(localStorage.getItem('clearedStagesV2') || '[]'));
 
 // =============================================
 // Utils
@@ -663,7 +440,7 @@ function shuffle(arr) {
   }
   return a;
 }
-
+function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function show(id) {
   ['top-screen','quiz-screen','result-screen'].forEach(s => {
     document.getElementById(s).style.display = 'none';
@@ -685,7 +462,7 @@ function renderTop() {
       <div class="stage-icon">${stage.icon}</div>
       <div class="stage-num">STAGE ${stage.id}</div>
       <div class="stage-name">${stage.name}</div>
-      <div class="stage-count">20問 / クリア80%以上</div>
+      <div class="stage-count">${stage.data.length}問 / クリア80%以上</div>
     `;
     card.onclick = () => startStage(i);
     grid.appendChild(card);
@@ -695,15 +472,19 @@ function renderTop() {
 // =============================================
 // Quiz
 // =============================================
-function startStage(idx) {
+function startStage(idx, reviewList) {
   currentStage = idx;
-  if (idx === 8) buildStage9();
-  questions = shuffle([...STAGES[idx].questions]).slice(0, 20);
+  isReviewMode = !!reviewList;
+  questions = isReviewMode ? shuffle(reviewList) : shuffle([...STAGES[idx].data]);
   qIndex = 0;
   score = 0;
+  streak = 0;
+  wrongQuestions = [];
+  answered = false;
   show('quiz-screen');
-  document.getElementById('ql-stage').textContent = `STAGE ${STAGES[idx].id}`;
+  document.getElementById('ql-stage').textContent = isReviewMode ? '復習モード' : `STAGE ${STAGES[idx].id}`;
   document.getElementById('ql-title').textContent = STAGES[idx].name;
+  document.getElementById('streak-bar').innerHTML = '';
   renderQuestion();
 }
 
@@ -711,10 +492,11 @@ function renderQuestion() {
   const q = questions[qIndex];
   answered = false;
 
-  document.getElementById('q-counter').textContent = `問題 ${qIndex + 1} / ${questions.length}`;
-  document.getElementById('q-text').textContent = q.q;
+  const total = questions.length;
+  document.getElementById('q-counter').textContent = `問題 ${qIndex + 1} / ${total}`;
+  document.getElementById('q-text').textContent = q.question;
   document.getElementById('ql-score').textContent = `${score} / ${qIndex}`;
-  document.getElementById('prog-fill').style.width = `${(qIndex / questions.length) * 100}%`;
+  document.getElementById('prog-fill').style.width = `${(qIndex / total) * 100}%`;
 
   const fb = document.getElementById('feedback-box');
   fb.className = 'feedback-box';
@@ -723,40 +505,68 @@ function renderQuestion() {
   const choicesEl = document.getElementById('choices');
   choicesEl.innerHTML = '';
 
-  // シャッフルして選択肢番号を保持
   const indices = shuffle([0,1,2,3]);
   indices.forEach(ci => {
     const btn = document.createElement('button');
     btn.className = 'choice-btn';
     btn.textContent = q.choices[ci];
     btn.dataset.ci = ci;
-    btn.onclick = () => selectAnswer(ci, q.ans, q.ex);
+    btn.onclick = () => selectAnswer(ci, q);
     choicesEl.appendChild(btn);
   });
 }
 
-function selectAnswer(selected, correct, explain) {
+function selectAnswer(selected, q) {
   if (answered) return;
   answered = true;
+
+  const correct = q.answer;
+  const ok = selected === correct;
 
   const btns = document.querySelectorAll('.choice-btn');
   btns.forEach(btn => {
     btn.disabled = true;
     const ci = parseInt(btn.dataset.ci);
     if (ci === correct) btn.classList.add('correct');
-    else if (ci === selected) btn.classList.add('wrong');
+    else if (ci === selected && !ok) btn.classList.add('wrong');
   });
 
-  const ok = selected === correct;
-  if (ok) score++;
+  if (ok) {
+    score++;
+    streak++;
+  } else {
+    wrongQuestions.push(q);
+    streak = 0;
+  }
 
+  // streak表示
+  const streakBar = document.getElementById('streak-bar');
+  if (streak >= 3) {
+    streakBar.innerHTML = `<span class="streak-badge">🔥 ${streak}連続正解！</span>`;
+  } else {
+    streakBar.innerHTML = '';
+  }
+
+  // フィードバック表示
   const fb = document.getElementById('feedback-box');
   const fbRes = document.getElementById('fb-result');
-  fbRes.textContent = ok ? '⭕ 正解！' : '❌ 不正解';
-  fbRes.className = 'feedback-result ' + (ok ? 'ok' : 'ng');
-  document.getElementById('fb-explain').textContent = explain;
-  fb.className = 'feedback-box show';
+  const fbCorrectLine = document.getElementById('fb-correct-line');
+  const fbExplain = document.getElementById('fb-explain');
+  const fbComment = document.getElementById('fb-comment');
 
+  if (ok) {
+    fbRes.textContent = '⭕ 正解！';
+    fbRes.className = 'feedback-result ok';
+    fbCorrectLine.textContent = '';
+  } else {
+    fbRes.textContent = '❌ 残念！';
+    fbRes.className = 'feedback-result ng';
+    fbCorrectLine.textContent = `正解： ${q.choices[correct]}`;
+  }
+
+  fbExplain.textContent = q.explanation;
+  fbComment.textContent = q.comment || rand(ok ? PRAISE : ENCOURAGE);
+  fb.className = 'feedback-box show';
   document.getElementById('next-btn').className = 'next-btn show';
 }
 
@@ -766,6 +576,7 @@ function nextQuestion() {
     showResult();
   } else {
     renderQuestion();
+    window.scrollTo(0, 0);
   }
 }
 
@@ -774,25 +585,59 @@ function nextQuestion() {
 // =============================================
 function showResult() {
   document.getElementById('prog-fill').style.width = '100%';
-  const pct = Math.round((score / questions.length) * 100);
+  const total = questions.length;
+  const pct = Math.round((score / total) * 100);
   const cleared = pct >= 80;
+  const perfect = pct === 100;
 
-  if (cleared) clearedStages.add(STAGES[currentStage].id);
-  localStorage.setItem('clearedStages', JSON.stringify([...clearedStages]));
+  if (cleared && !isReviewMode) {
+    clearedStages.add(STAGES[currentStage].id);
+    localStorage.setItem('clearedStagesV2', JSON.stringify([...clearedStages]));
+  }
 
   show('result-screen');
-  document.getElementById('res-emoji').textContent = cleared ? '🎉' : score >= 12 ? '😊' : '📚';
-  document.getElementById('res-title').textContent = cleared ? 'クリア！' : 'もう少し！';
-  document.getElementById('res-sub').textContent = `${STAGES[currentStage].name} ／ 正答率 ${pct}%`;
-  document.getElementById('res-score-num').textContent = score;
-  document.getElementById('res-score-denom').textContent = `/ ${questions.length}`;
+
+  let emoji, title;
+  if (perfect) {
+    emoji = '🏆'; title = 'PERFECT!!';
+  } else if (cleared) {
+    emoji = '🎉'; title = 'STAGE CLEAR！';
+  } else if (pct >= 60) {
+    emoji = '😊'; title = 'もう少し！';
+  } else {
+    emoji = '📚'; title = 'チャレンジ！';
+  }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-sub').textContent = `${STAGES[currentStage].name} ／ ${isReviewMode ? '復習モード' : ''}`;
+  document.getElementById('res-score-big').textContent = score;
+  document.getElementById('res-score-label').textContent = `/ ${total}問正解`;
+  document.getElementById('res-pct').textContent = `正答率 ${pct}％`;
 
   let msg = '';
-  if (pct === 100) msg = '完璧です！全問正解！この単元は完璧です。';
-  else if (cleared) msg = `${pct}%でクリア！よく頑張りました。間違えた問題を復習しておきましょう。`;
-  else if (pct >= 60) msg = `${pct}%！あと少しでクリアです。もう一度チャレンジしてみましょう！`;
-  else msg = `${pct}%でした。解説をよく読んで、もう一度チャレンジしてみてください。`;
+  if (perfect) {
+    msg = '満点達成！定期テストでも狙えるぞ！先生もびっくり！';
+  } else if (cleared) {
+    msg = `よく頑張った！次のステージへ進もう！`;
+  } else if (pct >= 60) {
+    msg = `あと少しでクリア！間違えた問題を復習してもう一度チャレンジしよう！`;
+  } else {
+    msg = `解説をよく読んで、もう一度チャレンジしてみよう！理科は暗記で伸びる！`;
+  }
   document.getElementById('res-msg').textContent = msg;
+
+  const reviewBtn = document.getElementById('review-btn');
+  if (wrongQuestions.length > 0 && !isReviewMode) {
+    reviewBtn.style.display = 'inline-block';
+    reviewBtn.textContent = `📝 間違えた問題を復習（${wrongQuestions.length}問）`;
+  } else {
+    reviewBtn.style.display = 'none';
+  }
+}
+
+function startReview() {
+  startStage(currentStage, wrongQuestions);
 }
 
 function retryStage() {
